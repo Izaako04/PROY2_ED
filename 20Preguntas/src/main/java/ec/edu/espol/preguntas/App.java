@@ -1,10 +1,8 @@
 package ec.edu.espol.preguntas;
 
+import GameLogic.Game;
 import TDAs.Reader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +19,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        //scene = new Scene(loadFXML("primary"), 640, 480);
+        //stage.setScene(scene);
+        //stage.show();
+        
+        //System.out.println(Reader.readerToHashMap("animales.txt"));
+        
+        // testeando la demo
+        Game jueguito = new Game ();
+        jueguito.buildDecisionsTree();
+        System.out.println(jueguito.getTree().recorridoPreOrden());
+        jueguito.testDemo();
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -37,14 +43,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-        
-        List<String> preguntas = Reader.readPreguntas("preguntas.txt");
-        System.out.println(preguntas);
-        
-        Map<String, String> respuestas = Reader.readRespuestas("respuestas.txt");
-        for (Map.Entry<String, String> entry : respuestas.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
     }
 
 }

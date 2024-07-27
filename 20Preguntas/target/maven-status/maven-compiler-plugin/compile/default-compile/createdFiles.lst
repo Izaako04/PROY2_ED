@@ -1,6 +1,10 @@
+GameLogic\TreeBuilder.class
 module-info.class
 ec\edu\espol\preguntas\PrimaryController.class
 ec\edu\espol\preguntas\App.class
+GameLogic\Game.class
 TDAs\Reader.class
+GameLogic\Question.class
+TDAs\TreeG4$Node.class
 TDAs\TreeG4.class
 ec\edu\espol\preguntas\SecondaryController.class
