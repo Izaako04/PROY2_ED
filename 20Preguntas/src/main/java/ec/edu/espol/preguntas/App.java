@@ -2,7 +2,9 @@ package ec.edu.espol.preguntas;
 
 import TDAs.Reader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,8 +38,13 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
         
-        List<String> preguntas = Reader.leerTxt("preguntas.txt");
+        List<String> preguntas = Reader.readPreguntas("preguntas.txt");
         System.out.println(preguntas);
+        
+        Map<String, String> respuestas = Reader.readRespuestas("respuestas.txt");
+        for (Map.Entry<String, String> entry : respuestas.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
     }
 
 }
