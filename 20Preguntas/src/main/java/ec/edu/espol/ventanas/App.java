@@ -26,10 +26,10 @@ public class App extends Application {
         //System.out.println(Reader.readerToHashMap("animales.txt"));
         
         // testeando la demo
-        Game jueguito = new Game ();
-        jueguito.buildDecisionsTree();
-        System.out.println(jueguito.getTree().recorridoPreOrden());
-        jueguito.testDemo();
+//        Game jueguito = new Game ();
+//        jueguito.buildDecisionsTree();
+//        System.out.println(jueguito.getTree().recorridoPreOrden());
+//        jueguito.testDemo();
     }
 
     static void setRoot(String fxml) throws IOException {

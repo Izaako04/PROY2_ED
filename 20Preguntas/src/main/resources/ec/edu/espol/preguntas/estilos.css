@@ -1,0 +1,122 @@
+.textField{
+    -fx-text-fill: #264653;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2.5 0;
+    -fx-border-color:  #38A3A5;
+
+}
+
+.textField2{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2.5 0;
+    -fx-border-color:  #FFFFFF;
+
+}
+
+.buttonMenu:hover{
+    -fx-border-width: 0 0 2.5 0;
+    -fx-border-color: #C880B7;
+
+}
+
+.buttonImg {
+    -fx-background-color:  #C880B7;
+}
+
+.combobox{
+    -fx-font-size: 14px; /* Tamaño de la letra */
+    -fx-font-family: "Verdana"; /* Tipo de letra */
+    -fx-background-color: #B3001B;
+    -fx-text-fill: white;
+}
+
+.combobox2{
+    -fx-font-size: 14px; /* Tamaño de la letra */
+    -fx-font-family: "Verdana"; /* Tipo de letra */
+    -fx-background-color: #B3001B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.combobox:hover {
+    -fx-cursor: hand;
+}
+
+.combobox .list-cell:hover {
+    -fx-background-color: #980B20; /* Cambia el color de fondo cuando pasas el cursor sobre la opción */
+    -fx-text-fill: #ffffff; /* Cambia el color del texto cuando pasas el cursor sobre la opción */
+}
+
+.combobox .arrow-button {
+    -fx-background-color: transparent; /* Establece el fondo transparente */
+}
+
+.combobox .arrow-button .arrow {
+    -fx-background-color: #ffffff; /* Cambia el color del símbolo de la flecha */
+}
+
+.combobox .list-cell:selected {
+    -fx-text-fill: #ffffff; /* Cambia el color aquí */    
+    -fx-background-color: #B3001B;    
+}
+
+.combobox .list-view .list-cell:selected {
+    -fx-background-color: transparent; /* Establece el color de fondo de las opciones seleccionadas como transparente */
+     -fx-text-fill: black;
+}
+
+.btn{
+    -fx-background-color: #38A3A5;    
+    -fx-background-radius: 10;
+}
+
+.btn2{
+    -fx-background-color: #90192B;    
+    -fx-background-radius: 10;
+}
+
+
+.btn:hover {
+    -fx-background-color: #980B20;
+}
+
+/* Cambiar el color del texto en el cuadro de selección desplegable */
+.comboCat .list-cell:selected {
+    -fx-text-fill: #D6EEFF; /* Cambia el color aquí */    
+}
+
+/* Cambiar el color del texto en los elementos seleccionados */
+.comboCat .list-view .list-cell {
+    -fx-text-fill: #D6EEFF; /* Cambia el color aquí */
+    -fx-background-color:  #392B58;
+}
+
+.textFIeldWallet{
+    -fx-text-fill: #708B75;
+    
+}
+
+.btnWallet{
+    -fx-background-color:  #708B75;
+    
+}
+
+.btnWallet:hover{
+    -fx-background-color: #DBF4AD;
+    
+}
+
+.scroll-bar:vertical{
+    -fx-background-color: #980B20;
+}
+
+.scroll-bar:horizontal{
+    -fx-background-color: transparent;
+}
+
+.text-area {
+    -fx-border-width: 0 0 0 0;
+    -fx-control-inner-background: #80ED99;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #38A3A5;
+}
