@@ -1,4 +1,4 @@
-package ec.edu.espol.preguntas;
+package ec.edu.espol.ventanas;
 
 import GameLogic.Game;
 import TDAs.Reader;
