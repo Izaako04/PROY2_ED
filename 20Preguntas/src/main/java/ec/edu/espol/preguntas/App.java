@@ -1,6 +1,8 @@
 package ec.edu.espol.preguntas;
 
+import TDAs.Reader;
 import java.io.IOException;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +35,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        
+        List<String> preguntas = Reader.leerTxt("preguntas.txt");
+        System.out.println(preguntas);
     }
 
 }

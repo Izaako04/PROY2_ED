@@ -1,0 +1,3 @@
+es tu animal un mamifero?
+es tu animal carnivoro?
+es tu animal cuadrupedo?

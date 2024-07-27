@@ -1,0 +1,6 @@
+module-info.class
+ec\edu\espol\preguntas\PrimaryController.class
+ec\edu\espol\preguntas\App.class
+TDAs\Reader.class
+TDAs\TreeG4.class
+ec\edu\espol\preguntas\SecondaryController.class
