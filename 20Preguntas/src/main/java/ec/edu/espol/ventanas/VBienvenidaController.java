@@ -27,6 +27,7 @@ public class VBienvenidaController implements Initializable {
 
     @FXML
     private void iniciarJuegoM(MouseEvent event) {
+        
     }
     
 }
