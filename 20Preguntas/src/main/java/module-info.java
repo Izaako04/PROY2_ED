@@ -1,4 +1,4 @@
-module ec.edu.espol.preguntas {
+module ec.edu.espol.ventanas {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;
