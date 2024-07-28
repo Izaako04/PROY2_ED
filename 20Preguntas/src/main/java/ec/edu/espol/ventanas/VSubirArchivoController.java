@@ -24,8 +24,6 @@ import javafx.scene.control.Label;
  */
 public class VSubirArchivoController implements Initializable {
 
-    @FXML
-    private ImageView archivoPreguntas;
     
     private Label lblArchivoSeleccionado;
     
@@ -36,6 +34,8 @@ public class VSubirArchivoController implements Initializable {
     private Button btnContinuar;
     @FXML
     private ImageView archivoPreguntas1;
+    @FXML
+    private ImageView archivoPreguntas2;
 
 
     /**
@@ -71,7 +71,6 @@ public class VSubirArchivoController implements Initializable {
         return archivoSeleccionado;
     }
 
-    @FXML
     private void subirArchivoPreguntas(MouseEvent event) {
         handleCargarArchivo(event);
     }

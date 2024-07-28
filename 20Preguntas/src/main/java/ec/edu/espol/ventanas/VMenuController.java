@@ -22,21 +22,23 @@ import javafx.stage.Stage;
  *
  * @author davsu
  */
-public class VBienvenidaController implements Initializable {
-    
-    /**
-     * Initializes the controller class.
-     */
+public class VMenuController implements Initializable {
     
     private Parent root;
     private Stage stage;
     private Scene scene;
-    @FXML
-    private Button btnIniciar;
     
+    @FXML
+    private Button btnStart;
+    @FXML
+    private Button btnConfiguracion;
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        btnIniciar.setOnMouseClicked(event -> {
+        btnStart.setOnMouseClicked(event -> {
             try {
                 iniciarJuegoM(event);
             } catch (IOException ex) {
@@ -47,19 +49,16 @@ public class VBienvenidaController implements Initializable {
 
     @FXML
     private void iniciarJuegoM(MouseEvent event) throws IOException{
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
-            root = loader.load();            
-            VMenuController vSubirArchivo = loader.getController();
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("vSubirArchivo.fxml"));
+        root = loader.load();
             
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        VSubirArchivoController vSAC = loader.getController();
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
     
 }
