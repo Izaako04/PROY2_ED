@@ -6,27 +6,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: DEE2E6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VMenuController">
    <children>
-      <Label layoutX="210.0" layoutY="58.0" text="Menú de Juego" textFill="#22577a">
+      <Label layoutX="278.0" layoutY="57.0" text="Menú de Juego" textFill="#22577a">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <Button fx:id="btnStart" layoutX="252.0" layoutY="144.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefWidth="87.0" styleClass="btn" stylesheets="@estilos.css" text="Start!" textAlignment="CENTER" textFill="#c7f9cc">
+      <Button fx:id="btnStart" layoutX="316.0" layoutY="281.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Start!" textAlignment="CENTER" textFill="#c7f9cc">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnConfiguracion" layoutX="241.0" layoutY="187.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefWidth="110.0" styleClass="btn" stylesheets="@estilos.css" text="Configuración" textFill="#c7f9cc">
+      <Button fx:id="btnConfiguracion" layoutX="316.0" layoutY="418.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Configuración" textFill="#c7f9cc">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Button>
    </children>

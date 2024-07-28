@@ -70,6 +70,26 @@
     -fx-background-radius: 10;
 }
 
+.btnNo{
+    -fx-background-color: #a4031f;    
+    -fx-background-radius: 10;
+}
+
+.btnNo:hover{
+    -fx-background-color: #780216;    
+    -fx-background-radius: 10;
+}
+
+.btnSi{
+    -fx-background-color: #1B9D51;    
+    -fx-background-radius: 10;
+}
+
+.btnSi:hover{
+    -fx-background-color: #0F572D;    
+    -fx-background-radius: 10;
+}
+
 .btn2{
     -fx-background-color: #90192B;    
     -fx-background-radius: 10;
