@@ -9,9 +9,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -24,6 +27,10 @@ public class VSubirArchivoController implements Initializable {
     private ImageView archivosRespuestas;
     @FXML
     private ImageView archivoPreguntas;
+    
+    private Label lblArchivoSeleccionado;
+    
+    private File archivoSeleccionado;
 
     /**
      * Initializes the controller class.
@@ -31,23 +38,35 @@ public class VSubirArchivoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        archivoPreguntas.setOnMouseClicked(e -> {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar archivo de texto");
-        fileChooser.getExtensionFilters().add(
-            new FileChooser.ExtensionFilter("Archivos de texto", "*.txt")
-        );
-        //File archivoSeleccionado = fileChooser.showOpenDialog(primaryStage);
-        //if (archivoSeleccionado != null) {
-//            String contenido = leerArchivo(archivoSeleccionado);
-//            textArea.setText(contenido);
+        
 
-            // Procesar el contenido del archivo para inicializar el juego
-//            HashMap<String, ArrayList<Integer>> animales = Reader.readerToHashMap(archivoSeleccionado.getPath());
-//            TreeG4 arbol = new TreeG4(animales);
-//            juego = new Game(arbol, 20);
-////            actualizarPregunta(lblPregunta);
-//        }
-    });  
+    
+    }
+    
+    private void handleCargarArchivo(MouseEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar archivo");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de texto", "*.txt"));
+        
+        // Obtener el Stage desde el evento del mouse
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
+        // Mostrar el cuadro de diálogo de selección de archivo
+        archivoSeleccionado = fileChooser.showOpenDialog(stage);
+        if (archivoSeleccionado != null) {
+            lblArchivoSeleccionado.setText("Archivo seleccionado: " + archivoSeleccionado.getName());
+        } else {
+            lblArchivoSeleccionado.setText("No se ha seleccionado ningún archivo");
+        }
+    }
+
+    // Método para obtener el archivo seleccionado
+    public File getArchivoSeleccionado() {
+        return archivoSeleccionado;
+    }
+
+    @FXML
+    private void subirArchivoPreguntas(MouseEvent event) {
+        handleCargarArchivo(event);
     }
 }
