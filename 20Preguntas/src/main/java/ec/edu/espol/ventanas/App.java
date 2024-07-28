@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -19,8 +20,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("vBienvenida"), 640, 480);
+        
+        scene = new Scene(loadFXML("vBienvenida"));
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("GuessTheAnimal");
+        stage.getIcons().add(new Image("\\imagenes\\icon.png"));
         stage.show();
         
         //System.out.println(Reader.readerToHashMap("animales.txt"));

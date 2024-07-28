@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -16,12 +15,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author davsu
  */
-public class VCantidadPreguntasController implements Initializable {
-
-    @FXML
-    private Button btnContinuar;
-    @FXML
-    private Button btnAtras;
+public class VMenu implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -31,5 +25,9 @@ public class VCantidadPreguntasController implements Initializable {
         // TODO
     }    
 
+    @FXML
+    private void iniciarJuegoM(MouseEvent event) {
+        
+    }
     
 }

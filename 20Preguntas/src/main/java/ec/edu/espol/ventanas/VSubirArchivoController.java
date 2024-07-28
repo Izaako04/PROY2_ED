@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -24,13 +25,18 @@ import javafx.scene.control.Label;
 public class VSubirArchivoController implements Initializable {
 
     @FXML
-    private ImageView archivosRespuestas;
-    @FXML
     private ImageView archivoPreguntas;
     
     private Label lblArchivoSeleccionado;
     
     private File archivoSeleccionado;
+    @FXML
+    private Button btnIniciarsin;
+    @FXML
+    private Button btnContinuar;
+    @FXML
+    private ImageView archivoPreguntas1;
+
 
     /**
      * Initializes the controller class.
