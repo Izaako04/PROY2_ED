@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VCantidadPreguntasController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #DEE2E6;" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VCantidadPreguntasController">
    <children>
       <Label layoutX="122.0" layoutY="91.0" text="¿Cuántas preguntas deseas hacer?" textAlignment="CENTER" textFill="#22577a">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <TextField id="tfNumero" layoutX="311.0" layoutY="279.0" prefHeight="43.0" prefWidth="178.0" promptText="Ingresa un numero" styleClass="textField" stylesheets="@estilos.css">
+      <TextField id="tfNumero" fx:id="tfNumero" layoutX="311.0" layoutY="279.0" prefHeight="43.0" prefWidth="178.0" promptText="Ingresa un numero" styleClass="textField" stylesheets="@estilos.css">
          <font>
             <Font size="15.0" />
          </font></TextField>
@@ -32,5 +32,10 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Label layoutX="309.0" layoutY="322.0" prefHeight="21.0" prefWidth="183.0" text="0 para preguntas ilimitadas" textFill="#22577a">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

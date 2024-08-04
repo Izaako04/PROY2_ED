@@ -41,7 +41,7 @@ public class VPreguntasController implements Initializable {
         // TODO
     }
 
-    public void home(){
+    public void home (int nPreguntas){
         
     }   
 }

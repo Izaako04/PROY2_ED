@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author davsu
+ * @author Grupo 4
  */
 public class VMenuController implements Initializable {
     
@@ -36,6 +36,7 @@ public class VMenuController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnStart.setOnMouseClicked(event -> {
@@ -47,12 +48,15 @@ public class VMenuController implements Initializable {
         });
     }    
 
+    public void home () {}
+    
     @FXML
     private void iniciarJuegoM(MouseEvent event) throws IOException{
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("vSubirArchivo.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("vCantidadPreguntas.fxml"));
         root = loader.load();
             
-        VSubirArchivoController vSAC = loader.getController();
+        VCantidadPreguntasController vCPC = loader.getController();
+        vCPC.home();
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);

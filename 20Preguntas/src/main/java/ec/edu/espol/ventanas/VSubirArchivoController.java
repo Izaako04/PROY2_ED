@@ -20,8 +20,9 @@ import javafx.scene.control.Label;
 /**
  * FXML Controller class
  *
- * @author davsu
+ * @author Grupo 4
  */
+
 public class VSubirArchivoController implements Initializable {
 
     
@@ -44,10 +45,9 @@ public class VSubirArchivoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-
-    
     }
+    
+    public void home (int nPreguntas) {}
     
     private void handleCargarArchivo(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();

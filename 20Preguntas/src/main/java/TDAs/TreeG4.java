@@ -40,6 +40,16 @@ public class TreeG4 <E> {
         return root == null;
     }
     
+    public int height (){
+        if (isEmpty()) return 0;
+        if (isLeaf()) return 1;
+        int alturaIzq = (root.yesBranch!=null) ? root.yesBranch.height() : 0;
+        int alturaDer = 0;
+        if (root.noBranch!=null) alturaDer = root.noBranch.height();
+
+        return 1 + Math.max( alturaDer, alturaIzq);
+    }
+    
     public boolean isLeaf () {
         //if(isEmpty()) return false;
         return root.yesBranch == null && root.noBranch == null;

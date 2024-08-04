@@ -1,5 +1,4 @@
 ec\edu\espol\ventanas\App.class
-ec\edu\espol\ventanas\VBienvenidaController.class
 GameLogic\Game.class
 TDAs\TreeG4.class
 ec\edu\espol\ventanas\VPreguntasController.class
@@ -10,5 +9,4 @@ GameLogic\TreeBuilder.class
 ec\edu\espol\ventanas\VMenuController.class
 ec\edu\espol\ventanas\VSubirArchivoController.class
 TDAs\TreeG4$Node.class
-ec\edu\espol\ventanas\VCantidadPreguntasController.class
 GameLogic\Question.class
