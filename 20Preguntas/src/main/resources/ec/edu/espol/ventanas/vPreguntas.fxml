@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VPreguntasController">
    <children>
       <ImageView fx:id="img1" fitHeight="91.0" fitWidth="94.0" layoutX="281.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true" />
-      <Button id="btnSi" fx:id="btnAtras" layoutX="118.0" layoutY="467.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="163.0" styleClass="btnSi" stylesheets="@estilos.css" text="‎ ‎ Sí‎ ‎ ‎" textFill="WHITE">
+      <Button id="btnSi" fx:id="btnSi" layoutX="118.0" layoutY="467.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="163.0" styleClass="btnSi" stylesheets="@estilos.css" text="‎ ‎ Sí‎ ‎ ‎" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -22,7 +22,7 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Text>
-      <Button id="btnNo" fx:id="btnAtras1" layoutX="515.0" layoutY="467.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="163.0" styleClass="btnNo" stylesheets="@estilos.css" text="‎‎ No‎ ‎" textFill="WHITE">
+      <Button id="btnNo" fx:id="btnNo" layoutX="515.0" layoutY="467.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="163.0" styleClass="btnNo" stylesheets="@estilos.css" text="‎‎ No‎ ‎" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>

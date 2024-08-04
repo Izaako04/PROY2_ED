@@ -26,6 +26,10 @@ public class Game {
         return gameTree;
     }
     
+    public TreeG4 <String> giveGameTree(){
+        return gameTree;
+    }
+    
     public void testDemo () {
         Scanner scanner = new Scanner(System.in);
         Stack <TreeG4 <String>> stack = new Stack <> ();

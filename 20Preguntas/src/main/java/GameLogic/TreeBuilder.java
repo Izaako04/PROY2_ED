@@ -31,7 +31,7 @@ public class TreeBuilder {
     
     // step 1: read animals' file
     public void setAnimals () {
-        animals = Reader.readerToHashMap("animales.txt");
+        animals = Reader.readerToHashMap("respuestas.txt");
     }
     
     // step 2: read questions' files
@@ -40,10 +40,10 @@ public class TreeBuilder {
         int cont = 0;
         for (String s : questionsTxt) {
             Question q = new Question (s);
-            double entropy = calculateEntropy (cont);
+            double entropy = calculateEntropy (questionsTxt.indexOf(s));
             q.setEntropy(entropy);
             questions.offer(q);
-            cont++;
+            //cont++;
         }
     }
     
@@ -161,6 +161,8 @@ public class TreeBuilder {
         int yes = 0;
         
         for (Map.Entry <String, ArrayList<Integer>> entry : animals.entrySet()) {
+            System.out.println(n + " " + entry.getValue().size());
+            System.out.println(entry);
             yes += entry.getValue().get(n);
         }
         return yes;

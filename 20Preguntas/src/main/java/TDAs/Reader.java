@@ -44,7 +44,7 @@ public class Reader {
                     
                     // Process the rest of the parts
                     for (int i = 1; i < parts.length; i++) {
-                        if ("sí".equals(parts[i])) {
+                        if ("si".equals(parts[i]) || "sí".equals(parts[i])) {
                             values.add(1);
                         } else if ("no".equals(parts[i])) {
                             values.add(0);
