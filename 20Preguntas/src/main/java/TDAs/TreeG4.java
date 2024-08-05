@@ -22,6 +22,10 @@ public class TreeG4 <E> {
         }
     }
     
+    public TreeG4 () {
+        root = null;
+    }
+    
     public TreeG4 (E e) {
         root = new Node (e);
     }

@@ -21,9 +21,6 @@ import javafx.scene.text.Text;
  * @author davsu
  */
 public class VPreguntasController implements Initializable {
-
-    
-    
     @FXML
     private ImageView img1;
     @FXML
@@ -42,26 +39,14 @@ public class VPreguntasController implements Initializable {
     private Stack<TreeG4<String>> stack;
     private boolean botonSiPresionado = false, botonNoPresionado = false;
 
-    /**
-     * Initializes the controller class.
-     */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // aqui no debe ir nada
-        // esto se quitaria luego de que ya este todo bien conectado
-        Game jueguito = new Game();
-        jueguito.buildDecisionsTree();
-        home(4,jueguito.giveGameTree());
-        
     }
 
     public void home (int nPreguntas, TreeG4 <String> tree){
-        // aqui empieza
         treeGame = tree;
-        nPreguntas = 0;
+        System.out.println(treeGame.recorridoPorNiveles());
         if (nPreguntas == 0) empezarJuego();
-        // sino llamamos otro metodo para jugar con nPreguntas
     }   
 
     private void empezarJuego() {

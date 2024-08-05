@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package ec.edu.espol.ventanas;
 
 import java.io.IOException;
@@ -20,14 +16,10 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author davsu
+ * @author Grupo 4
  */
+
 public class VBienvenidaController implements Initializable {
-    
-    /**
-     * Initializes the controller class.
-     */
-    
     private Parent root;
     private Stage stage;
     private Scene scene;

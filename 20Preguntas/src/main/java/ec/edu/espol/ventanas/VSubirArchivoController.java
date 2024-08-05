@@ -1,18 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package ec.edu.espol.ventanas;
 
+import GameLogic.Game;
+import TDAs.TreeG4;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ResourceBundle;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -29,8 +31,6 @@ import javafx.scene.text.Text;
  */
 
 public class VSubirArchivoController implements Initializable {
-
-    
     private Label lblArchivoSeleccionadoP;
     
     private File archivoSeleccionado;
@@ -39,28 +39,38 @@ public class VSubirArchivoController implements Initializable {
     @FXML
     private Button btnContinuar;
     @FXML
-    private ImageView archivoPreguntas1;
-    @FXML
-    private ImageView archivoPreguntas2;
-    @FXML
     private Text simboloduda;
-
-
-    /**
-     * Initializes the controller class.
-     */
+    private int cantPreguntas;
+    @FXML
+    private ImageView archivoPreguntas;
+    @FXML
+    private ImageView archivoRespuestas;
+    private boolean archivoPreguntasSubido = false, archivoRespuestasSubido = false;
+    private Parent root;
+    private Stage stage;
+    private Scene scene;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        configBtnArchivos();
     }
     
-    public void home (int nPreguntas) {}
+    public void home (int nPreguntas) {
+        cantPreguntas = nPreguntas;
+        configBtnArchivos();
+        
+        btnContinuar.setOnMouseClicked(event -> {try {
+            ventanaEmpezarJuego (event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }); 
+   }
     
-    private void handleCargarArchivo(MouseEvent event) throws IOException {
+    private boolean handleCargarArchivo(MouseEvent event, String newNameFile) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar archivo");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de texto", "*.txt"));
-        
+
         // Mostrar el cuadro de diálogo de selección de archivo
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
@@ -68,60 +78,109 @@ public class VSubirArchivoController implements Initializable {
             if (!targetFolder.exists()) {
                 targetFolder.mkdirs(); // Crea la carpeta si no existe
             }
-            File targetFile = new File(targetFolder, selectedFile.getName());
-            Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING); 
+
+            // Construir el nuevo archivo con el nombre proporcionado
+            File targetFile = new File(targetFolder, newNameFile + ".txt");
+
+            // Copiar el archivo seleccionado al nuevo archivo
+            Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            return true;
+        } else {
+            muestraAlerta("Archivo", "No se seleccionó ningún archivo");
+            return false;
         }
     }
 
+    public void ventanaEmpezarJuego (Event event) throws IOException {
+        if (!archivoPreguntasSubido || !archivoRespuestasSubido) {
+            muestraAlerta ("Empezando el juego", "Se usará la información del juego ya que no se seleccionó ningún archivo de texto");
+        }
+        
+        TreeG4 <String> arbol = generarArbol (archivoPreguntasSubido && archivoRespuestasSubido);
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vPreguntas.fxml"));
+        root = loader.load();
+
+        VPreguntasController vPreguntas = loader.getController();
+        vPreguntas.home(cantPreguntas, arbol);
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
+    }
+    
+    public TreeG4 <String> generarArbol (boolean subioArchivos) {
+        TreeG4 <String> arbol = new TreeG4 <> ();
+        Game jueguito = new Game();
+        jueguito.buildDecisionsTree(subioArchivos);
+        arbol = jueguito.getTree();
+        return arbol;
+    }
+    
     // Método para obtener el archivo seleccionado
     public File getArchivoSeleccionado() {
         return archivoSeleccionado;
     }
 
-    private void subirArchivoPreguntas(MouseEvent event) throws IOException {
-        handleCargarArchivo(event);
+    private boolean subirArchivoPreguntas(MouseEvent event) throws IOException {
+        return handleCargarArchivo(event, "preguntas");
     }
     
-    private void subirArchivoRespuestas(MouseEvent event) throws IOException {
-        handleCargarArchivo(event);
+    private boolean subirArchivoRespuestas(MouseEvent event) throws IOException {
+        return handleCargarArchivo(event, "respuestas");
     }
     
     private void configBtnArchivos(){
-        archivoPreguntas1.setOnMouseClicked(event -> {
-              try{
-                  subirArchivoPreguntas(event);
-                  muestraAlerta("Archivo", "Su archivo de Preguntas se ha subido con Exito!");
-                }catch (IOException ex) {
-                    ex.printStackTrace();
-                    }
+        archivoPreguntas.setOnMouseClicked(event -> {
+            try{
+                if (subirArchivoPreguntas(event)) {
+                    muestraAlerta("Archivo", "¡Su archivo de Preguntas se ha subido con Exito!");
+                    archivoPreguntasSubido = true;
+                } else {
+                    archivoPreguntasSubido = false;
+                }
+            }catch (IOException ex) {
+                ex.printStackTrace();
+                }
         });
         
-        archivoPreguntas2.setOnMouseClicked((event -> {
-              try{
-                  subirArchivoRespuestas(event);
-                  muestraAlerta("Archivo", "Su archivo de Respuestas se ha subido con Exito!");
-                }catch (IOException ex) {
-                    ex.printStackTrace();
-                    }
+        archivoRespuestas.setOnMouseClicked((event -> {
+            try{
+                if (subirArchivoRespuestas(event)) {
+                    muestraAlerta("Archivo", "¡Su archivo de Respuestas se ha subido con Exito!");
+                    archivoRespuestasSubido = true;
+                } else {
+                    archivoRespuestasSubido = false;
+                }
+            }catch (IOException ex) {
+                ex.printStackTrace();
+                }
         }));
         
-        simboloduda.setOnMouseClicked((event -> {
-              try{
-                  subirArchivoRespuestas(event);
-                  muestraAlerta("Archivo", "Su archivo de Respuestas se ha subido con Exito!");
-                }catch (IOException ex) {
-                    ex.printStackTrace();
-                    }
-        }));
+        simboloduda.setOnMouseClicked(event -> {
+            try{
+                if (subirArchivoPreguntas(event)) {
+                    muestraAlerta("Archivo", "¡Su archivo de Preguntas se ha subido con Exito!");
+                    archivoPreguntasSubido = true;
+                } else {
+                    archivoPreguntasSubido = false;
+                }
+            }catch (IOException ex) {
+                ex.printStackTrace();
+                }
+        });
         
     }
     
-        private void muestraAlerta (String titulo, String mssg) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(titulo);
-            alert.setHeaderText(null);
-            alert.setContentText(mssg);
-            alert.showAndWait();
+    private void muestraAlerta (String titulo, String mssg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mssg);
+        alert.showAndWait();
     }
     
 }

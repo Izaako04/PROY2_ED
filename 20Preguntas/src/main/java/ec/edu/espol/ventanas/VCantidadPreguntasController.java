@@ -68,7 +68,6 @@ public class VCantidadPreguntasController implements Initializable {
         
         btnAtras.setOnMouseClicked (event -> {
             try {
-                System.out.println(":v");
                 regresar (event);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -111,7 +110,6 @@ public class VCantidadPreguntasController implements Initializable {
     private void regresar (Event event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
         root = loader.load();
-        System.out.println("xd");
         VMenuController vMenuController = loader.getController();
         vMenuController.home();
             

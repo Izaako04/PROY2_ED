@@ -10,11 +10,11 @@ import java.util.Stack;
  */
 
 public class Game {
-    private TreeBuilder builder = new TreeBuilder ();
+    private TreeBuilder builder;
     private TreeG4 <String> gameTree;
     
-    
-    public void buildDecisionsTree () {
+    public void buildDecisionsTree (boolean subioArchivo) {
+        builder = new TreeBuilder (subioArchivo);
         builder.setAnimals();
         builder.setQuestions();
         builder.addQuestions();
@@ -23,10 +23,6 @@ public class Game {
     }
     
     public TreeG4 <String> getTree () {
-        return gameTree;
-    }
-    
-    public TreeG4 <String> giveGameTree(){
         return gameTree;
     }
     

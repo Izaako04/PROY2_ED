@@ -52,7 +52,7 @@ public class VMenuController implements Initializable {
     
     @FXML
     private void iniciarJuegoM(MouseEvent event) throws IOException{
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("vCantidadPreguntas.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vCantidadPreguntas.fxml"));
         root = loader.load();
             
         VCantidadPreguntasController vCPC = loader.getController();

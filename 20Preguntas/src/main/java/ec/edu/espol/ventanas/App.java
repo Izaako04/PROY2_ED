@@ -21,20 +21,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         
-        scene = new Scene(loadFXML("vPreguntas"), 800, 600);
+        scene = new Scene(loadFXML("vBienvenida"), 800, 600);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("GuessTheAnimal");
-        stage.getIcons().add(new Image("\\imagenes\\icon.png"));
+        stage.getIcons().add(new Image("./imagenes/icon.png"));
         stage.show();
-        
-        //System.out.println(Reader.readerToHashMap("animales.txt"));
-        
-        // testeando la demo
-//        Game jueguito = new Game ();
-//        jueguito.buildDecisionsTree();
-//        System.out.println(jueguito.getTree().recorridoPreOrden());
-//        jueguito.testDemo();
     }
 
     static void setRoot(String fxml) throws IOException {

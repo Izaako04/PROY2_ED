@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VSubirArchivoController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VSubirArchivoController">
     <stylesheets>
         <URL value="@/styles/vsubirarchivo.css" />
     </stylesheets>
@@ -20,7 +20,7 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
-      <ImageView fx:id="archivoPreguntas1" fitHeight="182.0" fitWidth="170.0" layoutX="82.0" layoutY="215.0">
+      <ImageView fx:id="archivoPreguntas" fitHeight="182.0" fitWidth="170.0" layoutX="82.0" layoutY="215.0">
          <image>
             <Image url="@../../../../imagenes/95413_document_1024x1024.png" />
          </image>
@@ -46,7 +46,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <ImageView fx:id="archivoPreguntas2" fitHeight="182.0" fitWidth="170.0" layoutX="553.0" layoutY="215.0">
+      <ImageView fx:id="archivoRespuestas" fitHeight="182.0" fitWidth="170.0" layoutX="553.0" layoutY="215.0">
          <image>
             <Image url="@../../../../imagenes/95413_document_1024x1024.png" />
          </image>

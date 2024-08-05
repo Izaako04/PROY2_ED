@@ -19,8 +19,10 @@ public class TreeBuilder {
     private HashMap <String, ArrayList <Integer>> animals = new HashMap <> ();
     private PriorityQueue <Question> questions;
     private ArrayList <Question> listQuestions;
+    private boolean subioArchivo;
     
-    public TreeBuilder () {
+    public TreeBuilder (boolean subioArchivo) {
+        this.subioArchivo = subioArchivo;
         reset ();
     }
     
@@ -31,12 +33,17 @@ public class TreeBuilder {
     
     // step 1: read animals' file
     public void setAnimals () {
-        animals = Reader.readerToHashMap("respuestas.txt");
+        if (subioArchivo) animals = Reader.readerToHashMap("Txts/respuestas.txt");
+        else animals = Reader.readerToHashMap("respuestas.txt");
     }
     
     // step 2: read questions' files
     public void setQuestions () {
-        ArrayList <String> questionsTxt = Reader.readToList("preguntas.txt");
+        ArrayList <String> questionsTxt = new ArrayList <> ();
+        
+        if (subioArchivo) questionsTxt = Reader.readToList("Txts/preguntas.txt");
+        else questionsTxt = Reader.readToList("preguntas.txt");
+        
         int cont = 0;
         for (String s : questionsTxt) {
             Question q = new Question (s);
@@ -65,7 +72,10 @@ public class TreeBuilder {
 
     // step 4
     public void addAnimals () {
-        ArrayList <String> questionsTxt = Reader.readToList("preguntas.txt");
+        ArrayList <String> questionsTxt = new ArrayList <> ();
+        
+        if (subioArchivo) questionsTxt = Reader.readToList("Txts/preguntas.txt");
+        else questionsTxt = Reader.readToList("preguntas.txt");
         
         for (Map.Entry<String, ArrayList <Integer>> entry: animals.entrySet()) {
             Stack <TreeG4 <String>> stackTree = new Stack <> ();
