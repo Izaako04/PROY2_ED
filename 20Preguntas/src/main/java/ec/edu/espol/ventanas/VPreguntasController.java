@@ -7,13 +7,20 @@ import java.util.Stack;
 
 import GameLogic.Game;
 import TDAs.TreeG4;
+import java.io.IOException;
+import java.util.ArrayList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -33,8 +40,14 @@ public class VPreguntasController implements Initializable {
     private Button btnSi;
     @FXML
     private Button btnNo;
-
-    private String pregunta;
+    
+    private Parent root;
+    private Stage stage;
+    private Scene scene;
+    
+    private String respuesta;
+    private int cantPreguntas;
+    private int conteoPregunta = 1;
     private TreeG4 <String> treeGame;
     private Stack<TreeG4<String>> stack;
     private boolean botonSiPresionado = false, botonNoPresionado = false;
@@ -45,6 +58,7 @@ public class VPreguntasController implements Initializable {
 
     public void home (int nPreguntas, TreeG4 <String> tree){
         treeGame = tree;
+        cantPreguntas = nPreguntas +1;
         System.out.println(treeGame.recorridoPorNiveles());
         if (nPreguntas == 0) empezarJuego();
     }   
@@ -60,8 +74,9 @@ public class VPreguntasController implements Initializable {
         if (stack.isEmpty()) {
             return;
         }
-
+        
         TreeG4<String> tempTree = stack.pop();
+        ArrayList<String> conjuntos = new ArrayList<>();
         
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
@@ -71,16 +86,27 @@ public class VPreguntasController implements Initializable {
                     stack.push(tempTree.getYesBranch());
                     procesarNodo();
                 });
-                
+
                 btnNo.setOnAction(event -> {
                     respuestaNo(event);
                     stack.push(tempTree.getNoBranch());
                     procesarNodo();
-                });
-            } else {
-                txPregunta.setText("Tu animal es: " + tempTree.getContent());
+                });   
+//            } else if(conteoPregunta==cantPreguntas){
+//                
+//                conjuntos =tempTree.recorridoPreOrden();
+//                System.out.println(conjuntos.toString());
+            }else {
+                respuesta = tempTree.getContent();
+               // txPregunta.setText("Tu animal es: " + tempTree.getContent());
+                try {
+                    ventanaMostrarRespuesta(respuesta);
+                } catch (Exception e) {
+                    
+                }
             }
         }
+        conteoPregunta+=1;
     }
 
     private void respuestaSi(Event event) {
@@ -89,5 +115,21 @@ public class VPreguntasController implements Initializable {
 
     private void respuestaNo(Event event) {
         botonNoPresionado = true;
+    }
+    
+    
+    public void ventanaMostrarRespuesta (String animal) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vResultado.fxml"));
+        root = loader.load();
+
+        VResultadoController vRespuesta = loader.getController();
+        vRespuesta.home(animal);
+        
+        stage = (Stage) txPregunta.getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
     }
 }
