@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 ¿Es herviboro?
 ¿Es carinvoro?
 ¿Es ave?
 ¿Vive en la sabana?
 ¿Es de clima frio?
+=======
+¿Es este animal un mamífero?
+¿Es este animal un carnívoro?
+¿Se para este animal sobre cuatro patas?
+¿Vive este animal en el agua?
+¿Es este animal un ave?
+¿Puede este animal volar?
+¿Es este animal un reptil?
+¿Es este animal doméstico?
+¿Es este animal más grande que un perro?
+¿Tiene este animal un caparazón?
+>>>>>>> 91fd2e16678c33fdb892f9231d50273f8f2af459
