@@ -1,3 +1,5 @@
-¿Es un mamífero?
-¿Puede volar?
-¿Es un reptil?
+¿Es herviboro?
+¿Es carinvoro?
+¿Es ave?
+¿Vive en la sabana?
+¿Es de clima frio?
