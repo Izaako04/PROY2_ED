@@ -38,7 +38,7 @@ public class TreeBuilder {
     }
     
     // step 2: read questions' files
-    public void setQuestions () {
+    public ArrayList<String> setQuestions () {
         ArrayList <String> questionsTxt = new ArrayList <> ();
         
         if (subioArchivo) questionsTxt = Reader.readToList("Txts/preguntas.txt");
@@ -52,6 +52,7 @@ public class TreeBuilder {
             questions.offer(q);
             //cont++;
         }
+        return questionsTxt;
     }
     
     // step 3
@@ -221,4 +222,10 @@ public class TreeBuilder {
 
         return noEntropy;
     }
+
+    public ArrayList<Question> getListQuestions() {
+        return listQuestions;
+    }
+    
+    
 }

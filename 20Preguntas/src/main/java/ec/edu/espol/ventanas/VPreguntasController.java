@@ -1,4 +1,4 @@
-package ec.edu.espol.ventanas;
+package ec.edu.espol.ventanas; 
 //hola :D Holaaaaaaa, sale video llamada en whatsapp
 // okas
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 
 import GameLogic.Game;
+import TDAs.Reader;
 import TDAs.TreeG4;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class VPreguntasController implements Initializable {
     private int cantPreguntas;
     private int conteoPregunta = 1;
     private TreeG4 <String> treeGame;
+    private  ArrayList<String> preguntas;
+    private ArrayList<String> conjuntos;
     private Stack<TreeG4<String>> stack;
     private boolean botonSiPresionado = false, botonNoPresionado = false;
 
@@ -56,18 +59,23 @@ public class VPreguntasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void home (int nPreguntas, TreeG4 <String> tree){
+    public void home (int nPreguntas, TreeG4 <String> tree, ArrayList<String> prets){
+        preguntas = prets;
         treeGame = tree;
         cantPreguntas = nPreguntas +1;
         System.out.println(treeGame.recorridoPorNiveles());
-        if (nPreguntas == 0) empezarJuego();
+        empezarJuego(nPreguntas);
     }   
 
-    private void empezarJuego() {
+    private void empezarJuego(int n) {
         stack = new Stack<>();
         stack.push(treeGame);
-        
-        procesarNodo();
+        if(n!=0) {
+            procesarNodo();
+        }
+        else{
+            procesarNodoInfinito();
+        }
     }
     
     private void procesarNodo () {
@@ -76,7 +84,26 @@ public class VPreguntasController implements Initializable {
         }
         
         TreeG4<String> tempTree = stack.pop();
-        ArrayList<String> conjuntos = new ArrayList<>();
+        System.out.println("Cantidad de preguntas> "+cantPreguntas);
+        System.out.println("Cantidad de pregutnas recorridas>> "+conteoPregunta);
+         
+        conjuntos =tempTree.recorridoPorNiveles();
+                System.out.println("El animal es:> ");
+                for(String s: conjuntos){
+                    System.out.println(s);
+                }
+        
+        if(conteoPregunta==cantPreguntas){
+               
+                for(String s: conjuntos){
+                    if(preguntas.contains(s)) conjuntos.remove(s);
+                }
+                conjuntos.toString();
+                try {
+                    ventanaMostrarRespuesta(respuesta, conjuntos);
+                } catch (Exception e) {
+                return;}
+        }
         
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
@@ -91,40 +118,68 @@ public class VPreguntasController implements Initializable {
                     respuestaNo(event);
                     stack.push(tempTree.getNoBranch());
                     procesarNodo();
-                });   
-//            } else if(conteoPregunta==cantPreguntas){
-//                
-//                conjuntos =tempTree.recorridoPreOrden();
-//                System.out.println(conjuntos.toString());
+                });
             }else {
                 respuesta = tempTree.getContent();
                // txPregunta.setText("Tu animal es: " + tempTree.getContent());
                 try {
-                    ventanaMostrarRespuesta(respuesta);
+                    ventanaMostrarRespuesta(respuesta,conjuntos);
                 } catch (Exception e) {
                     
                 }
             }
         }
-        conteoPregunta+=1;
+    }
+    
+    
+        private void procesarNodoInfinito () {
+        if (stack.isEmpty()) {
+            return;
+        }
+        TreeG4<String> tempTree = stack.pop();
+        ArrayList<String> conjuntos = new ArrayList<>();
+        if (tempTree != null) {
+            if (!tempTree.isLeaf()) {
+                txPregunta.setText(tempTree.getContent());
+                btnSi.setOnAction(event -> {
+                    respuestaSi(event);
+                    stack.push(tempTree.getYesBranch());
+                    procesarNodo();
+                });
+                btnNo.setOnAction(event -> {
+                    respuestaNo(event);
+                    stack.push(tempTree.getNoBranch());
+                    procesarNodo();
+                });
+            }else {
+                respuesta = tempTree.getContent();
+               // txPregunta.setText("Tu animal es: " + tempTree.getContent());
+                try {
+                    ventanaMostrarRespuesta(respuesta,conjuntos);
+                } catch (Exception e) {                   
+                }
+            }
+        }
     }
 
     private void respuestaSi(Event event) {
         botonSiPresionado = true;
+        conteoPregunta+=1;
     }
 
     private void respuestaNo(Event event) {
         botonNoPresionado = true;
+        conteoPregunta+=1;
     }
     
     
-    public void ventanaMostrarRespuesta (String animal) throws IOException {
+    public void ventanaMostrarRespuesta (String animal, ArrayList<String> respuestasDadas) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vResultado.fxml"));
         root = loader.load();
 
         VResultadoController vRespuesta = loader.getController();
-        vRespuesta.home(animal);
+        vRespuesta.home(animal, respuestasDadas);
         
         stage = (Stage) txPregunta.getScene().getWindow();
         scene = new Scene(root, 800, 600);

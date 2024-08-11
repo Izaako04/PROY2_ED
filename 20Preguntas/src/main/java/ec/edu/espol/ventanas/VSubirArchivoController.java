@@ -1,12 +1,14 @@
 package ec.edu.espol.ventanas;
 
 import GameLogic.Game;
+import TDAs.Reader;
 import TDAs.TreeG4;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -45,6 +47,8 @@ public class VSubirArchivoController implements Initializable {
     private ImageView archivoPreguntas;
     @FXML
     private ImageView archivoRespuestas;
+    private ArrayList<String> questionsTxt;
+    private Game jueguito;
     private boolean archivoPreguntasSubido = false, archivoRespuestasSubido = false;
     private Parent root;
     private Stage stage;
@@ -98,12 +102,14 @@ public class VSubirArchivoController implements Initializable {
         }
         
         TreeG4 <String> arbol = generarArbol (archivoPreguntasSubido && archivoRespuestasSubido);
+//        questionsTxt = arbol.getContent();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPreguntas.fxml"));
         root = loader.load();
+        
 
         VPreguntasController vPreguntas = loader.getController();
-        vPreguntas.home(cantPreguntas, arbol);
+        vPreguntas.home(cantPreguntas, arbol, jueguito.getPreguntasTxt());
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -114,7 +120,7 @@ public class VSubirArchivoController implements Initializable {
     
     public TreeG4 <String> generarArbol (boolean subioArchivos) {
         TreeG4 <String> arbol = new TreeG4 <> ();
-        Game jueguito = new Game();
+        jueguito = new Game();
         jueguito.buildDecisionsTree(subioArchivos);
         arbol = jueguito.getTree();
         return arbol;

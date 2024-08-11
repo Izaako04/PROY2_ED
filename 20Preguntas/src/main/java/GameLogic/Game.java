@@ -1,6 +1,7 @@
 package GameLogic;
 
 import TDAs.TreeG4;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -12,11 +13,12 @@ import java.util.Stack;
 public class Game {
     private TreeBuilder builder;
     private TreeG4 <String> gameTree;
+    private ArrayList<String> preguntasTxt;
     
     public void buildDecisionsTree (boolean subioArchivo) {
         builder = new TreeBuilder (subioArchivo);
         builder.setAnimals();
-        builder.setQuestions();
+        preguntasTxt = builder.setQuestions();
         builder.addQuestions();
         builder.addAnimals();
         gameTree = builder.getProduct();
@@ -25,6 +27,12 @@ public class Game {
     public TreeG4 <String> getTree () {
         return gameTree;
     }
+
+    public ArrayList<String> getPreguntasTxt() {
+        return preguntasTxt;
+    }
+    
+    
     
     public void testDemo () {
         Scanner scanner = new Scanner(System.in);

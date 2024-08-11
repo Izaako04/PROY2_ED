@@ -6,6 +6,7 @@ package ec.edu.espol.ventanas;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -46,7 +47,14 @@ public class VResultadoController implements Initializable {
         // TODO
     }
     
-    public void home(String animal){
+    public void home(String animal, ArrayList<String> conjuntos){
+        
+        if(conjuntos.size()!=1){
+            txtRespuesta.setText(conjuntos.toString());
+           String imagePath = "/imagenes/" + "varios" + ".png"; // Ruta a la imagen en el classpath
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imgResultado.setImage(image);
+        }
         
         txtRespuesta.setText(animal);
        String imagePath = "/imagenes/" + animal + ".png"; // Ruta a la imagen en el classpath
