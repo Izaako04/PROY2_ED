@@ -86,23 +86,18 @@ public class VPreguntasController implements Initializable {
         TreeG4<String> tempTree = stack.pop();
         System.out.println("Cantidad de preguntas> "+cantPreguntas);
         System.out.println("Cantidad de pregutnas recorridas>> "+conteoPregunta);
-         
-        conjuntos =tempTree.recorridoPorNiveles();
-                System.out.println("El animal es:> ");
-                for(String s: conjuntos){
-                    System.out.println(s);
-                }
         
+        conjuntos = tempTree.recorridoPorNiveles();
+
         if(conteoPregunta==cantPreguntas){
-               
+            ArrayList <String> lConjuntoAnimales = new ArrayList <>();
                 for(String s: conjuntos){
-                    if(preguntas.contains(s)) conjuntos.remove(s);
+                    if(!preguntas.contains(s)) {
+                        lConjuntoAnimales.add(s);
+                    }
                 }
-                conjuntos.toString();
-                try {
-                    ventanaMostrarRespuesta(respuesta, conjuntos);
-                } catch (Exception e) {
-                return;}
+                
+                ventanaMostrarRespuesta(respuesta, lConjuntoAnimales);
         }
         
         if (tempTree != null) {
@@ -173,10 +168,15 @@ public class VPreguntasController implements Initializable {
     }
     
     
-    public void ventanaMostrarRespuesta (String animal, ArrayList<String> respuestasDadas) throws IOException {
+    public void ventanaMostrarRespuesta (String animal, ArrayList<String> respuestasDadas) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vResultado.fxml"));
-        root = loader.load();
+        
+        try {
+            root = loader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         VResultadoController vRespuesta = loader.getController();
         vRespuesta.home(animal, respuestasDadas);

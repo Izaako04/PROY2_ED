@@ -56,10 +56,10 @@ public class VResultadoController implements Initializable {
             imgResultado.setImage(image);
         }
         
-        txtRespuesta.setText(animal);
-       String imagePath = "/imagenes/" + animal + ".png"; // Ruta a la imagen en el classpath
-        Image image = new Image(getClass().getResourceAsStream(imagePath));
-        imgResultado.setImage(image);
+        txtRespuesta.setText(conjuntos.toString());
+        String imagePath = "/imagenes/" + animal + ".png"; // Ruta a la imagen en el classpath
+        //Image image = new Image(getClass().getResourceAsStream(imagePath));
+        //imgResultado.setImage(image);
         
           btnRegresar.setOnAction(event -> {
             try {
