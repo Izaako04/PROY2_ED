@@ -17,7 +17,7 @@
       <ImageView id="imgAnimal" fx:id="imgResultado" fitHeight="275.0" fitWidth="369.0" layoutX="215.0" layoutY="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
       <StackPane layoutX="128.0" layoutY="346.0" prefHeight="150.0" prefWidth="544.0">
          <children>
-            <Text fx:id="txtRespuesta" fill="#22577a" layoutX="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" translateX="68.0" wrappingWidth="228.66671752929688" x="32.0">
+            <Text fx:id="txtRespuesta" fill="#22577a" layoutX="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" translateX="82.0" wrappingWidth="280.6667175292969" x="32.0">
                <font>
                   <Font name="Franklin Gothic Heavy" size="35.0" />
                </font>

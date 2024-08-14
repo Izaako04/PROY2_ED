@@ -49,16 +49,26 @@ public class VResultadoController implements Initializable {
     
     public void home(String animal, ArrayList<String> conjuntos){
         
-        if(conjuntos.size()!=1){
+        if(animal == null && conjuntos.isEmpty()){
+            txtRespuesta.setText("Animal no encontrado!");
+            String imagePath = "/imagenes/" + "desconocido" + ".png"; // Ruta a la imagen en el classpath
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imgResultado.setImage(image);
+        }else if(animal == null && conjuntos.size() == 1){
+            txtRespuesta.setText(conjuntos.get(0));
+            String imagePath = "/imagenes/" + conjuntos.get(0) + ".png"; // Ruta a la imagen en el classpath
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imgResultado.setImage(image);
+        }else if(conjuntos.size()!=1){
             txtRespuesta.setText(conjuntos.toString());
            String imagePath = "/imagenes/" + "varios" + ".png"; // Ruta a la imagen en el classpath
             Image image = new Image(getClass().getResourceAsStream(imagePath));
             imgResultado.setImage(image);
         }else{
-        txtRespuesta.setText(animal);
-        String imagePath = "/imagenes/" + animal + ".png"; // Ruta a la imagen en el classpath
-        Image image = new Image(getClass().getResourceAsStream(imagePath));
-        imgResultado.setImage(image);
+            txtRespuesta.setText(animal);
+            String imagePath = "/imagenes/" + animal + ".png"; // Ruta a la imagen en el classpath
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imgResultado.setImage(image);
         }
         
           btnRegresar.setOnAction(event -> {

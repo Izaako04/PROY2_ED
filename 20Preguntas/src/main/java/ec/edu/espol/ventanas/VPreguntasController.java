@@ -100,7 +100,9 @@ public class VPreguntasController implements Initializable {
                         lConjuntoAnimales.add(s);
                     }
                 }
-                
+                    System.out.println(respuesta);
+                    System.out.println(lConjuntoAnimales.toString());
+                    System.out.println(lConjuntoAnimales.isEmpty());
                 ventanaMostrarRespuesta(respuesta, lConjuntoAnimales);
         }
         
