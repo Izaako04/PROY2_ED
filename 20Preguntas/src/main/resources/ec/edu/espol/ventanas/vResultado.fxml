@@ -4,25 +4,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" styleClass="text-area" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VResultadoController">
    <children>
-      <Label layoutX="150.0" layoutY="397.0" text="Tu animal es:" textAlignment="CENTER" textFill="#22577a">
-         <font>
-            <Font name="System Bold" size="35.0" />
-         </font>
-      </Label>
       <Button id="btnContinuar" fx:id="btnRegresar" layoutX="270.0" layoutY="504.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="235.0" styleClass="btn" stylesheets="@estilos.css" text="Continuar" textFill="#c7f9cc">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <ImageView id="imgAnimal" fx:id="imgResultado" fitHeight="275.0" fitWidth="369.0" layoutX="182.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="txtRespuesta" fill="#22577a" layoutX="425.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-         <font>
-            <Font name="Franklin Gothic Heavy" size="35.0" />
-         </font>
-      </Text>
+      <ImageView id="imgAnimal" fx:id="imgResultado" fitHeight="275.0" fitWidth="369.0" layoutX="215.0" layoutY="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+      <StackPane layoutX="128.0" layoutY="346.0" prefHeight="150.0" prefWidth="544.0">
+         <children>
+            <Text fx:id="txtRespuesta" fill="#22577a" layoutX="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" translateX="68.0" wrappingWidth="228.66671752929688" x="32.0">
+               <font>
+                  <Font name="Franklin Gothic Heavy" size="35.0" />
+               </font>
+            </Text>
+            <Label prefHeight="51.0" prefWidth="218.0" text="Tu animal es:" textFill="#22577a" translateX="-155.0">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

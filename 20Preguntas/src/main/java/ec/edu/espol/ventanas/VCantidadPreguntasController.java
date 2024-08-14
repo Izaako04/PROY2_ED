@@ -4,6 +4,8 @@
  */
 package ec.edu.espol.ventanas;
 
+import GameLogic.Game;
+import TDAs.TreeG4;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,7 +37,7 @@ public class VCantidadPreguntasController implements Initializable {
     private Button btnAtras;
     @FXML
     private TextField tfNumero;
-    
+    private Game jueguito;
     private Parent root;
     private Stage stage;
     private Scene scene;
@@ -82,7 +84,7 @@ public class VCantidadPreguntasController implements Initializable {
         }
         
         nPreguntas = Integer.parseInt(tfNumero.getText());
-        vCargarArchivo (event);
+        vEmpezarJuego (event);
     }
     
     private void muestraAlerta (String titulo, String mssg) {
@@ -93,12 +95,18 @@ public class VCantidadPreguntasController implements Initializable {
         alert.showAndWait();
     }
     
-    private void vCargarArchivo (Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("vSubirArchivo.fxml"));
+public void vEmpezarJuego (Event event) throws IOException {
+            muestraAlerta ("Empezando el juego", "Se usará la información del juego en los archivos de texto cargados");
+        
+        TreeG4 <String> arbol = generarArbol (true);
+//        questionsTxt = arbol.getContent();
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vPreguntas.fxml"));
         root = loader.load();
+        
 
-        VSubirArchivoController vSubirArchivo = loader.getController();
-        vSubirArchivo.home(nPreguntas);
+        VPreguntasController vPreguntas = loader.getController();
+        vPreguntas.home(nPreguntas, arbol, jueguito.getPreguntasTxt());
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -118,5 +126,13 @@ public class VCantidadPreguntasController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+    
+        public TreeG4 <String> generarArbol (boolean subioArchivos) {
+        TreeG4 <String> arbol = new TreeG4 <> ();
+        jueguito = new Game();
+        jueguito.buildDecisionsTree(subioArchivos);
+        arbol = jueguito.getTree();
+        return arbol;
     }
 }

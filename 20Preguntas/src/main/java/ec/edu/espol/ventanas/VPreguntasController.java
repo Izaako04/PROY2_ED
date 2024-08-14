@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -54,6 +55,8 @@ public class VPreguntasController implements Initializable {
     private ArrayList<String> conjuntos;
     private Stack<TreeG4<String>> stack;
     private boolean botonSiPresionado = false, botonNoPresionado = false;
+    @FXML
+    private StackPane StackPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -63,6 +66,7 @@ public class VPreguntasController implements Initializable {
         preguntas = prets;
         treeGame = tree;
         cantPreguntas = nPreguntas +1;
+         txPregunta.setWrappingWidth(600);
         System.out.println(treeGame.recorridoPorNiveles());
         empezarJuego(nPreguntas);
     }   

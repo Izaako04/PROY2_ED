@@ -58,12 +58,11 @@ public class VSubirArchivoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
     
-    public void home (int nPreguntas) {
-        cantPreguntas = nPreguntas;
+    public void home () {
         configBtnArchivos();
         
         btnContinuar.setOnMouseClicked(event -> {try {
-            ventanaEmpezarJuego (event);
+            regresar (event);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -179,6 +178,19 @@ public class VSubirArchivoController implements Initializable {
                 }
         });
         
+    }
+    
+    private void regresar (Event event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
+        root = loader.load();
+        VMenuController vMenuController = loader.getController();
+        vMenuController.home();
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
     
     private void muestraAlerta (String titulo, String mssg) {

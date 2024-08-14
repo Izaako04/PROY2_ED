@@ -7,6 +7,7 @@ package ec.edu.espol.ventanas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,6 +47,14 @@ public class VMenuController implements Initializable {
                 ex.printStackTrace();
             }
         });
+        
+        btnConfiguracion.setOnMouseClicked(event -> {
+            try {
+                vCargarArchivo(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }    
 
     public void home () {}
@@ -63,6 +72,20 @@ public class VMenuController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+    
+        private void vCargarArchivo (Event event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vSubirArchivo.fxml"));
+        root = loader.load();
+
+        VSubirArchivoController vSubirArchivo = loader.getController();
+        vSubirArchivo.home();
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
     }
     
 }
