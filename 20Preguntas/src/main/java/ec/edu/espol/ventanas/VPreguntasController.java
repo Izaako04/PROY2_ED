@@ -10,6 +10,7 @@ import TDAs.Reader;
 import TDAs.TreeG4;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -47,9 +49,11 @@ public class VPreguntasController implements Initializable {
     private Stage stage;
     private Scene scene;
     
+    private ArrayList<String> botonesSelects = new ArrayList<>(Collections.singletonList(" "));
     private String respuesta;
     private int cantPreguntas;
     private int conteoPregunta = 1;
+    private int modoJuego;
     private TreeG4 <String> treeGame;
     private  ArrayList<String> preguntas;
     private ArrayList<String> conjuntos;
@@ -66,6 +70,7 @@ public class VPreguntasController implements Initializable {
         preguntas = prets;
         treeGame = tree;
         cantPreguntas = nPreguntas +1;
+        System.out.println(nPreguntas);
          txPregunta.setWrappingWidth(600);
         System.out.println(treeGame.recorridoPorNiveles());
         empezarJuego(nPreguntas);
@@ -76,9 +81,11 @@ public class VPreguntasController implements Initializable {
         stack.push(treeGame);
         if(n!=0) {
             procesarNodo();
+            modoJuego = 1;
         }
         else{
             procesarNodoInfinito();
+            modoJuego = 0;
         }
     }
     
@@ -86,10 +93,8 @@ public class VPreguntasController implements Initializable {
         if (stack.isEmpty()) {
             return;
         }
-        
+        System.out.println("Juego NO infinito"); 
         TreeG4<String> tempTree = stack.pop();
-        System.out.println("Cantidad de preguntas> "+cantPreguntas);
-        System.out.println("Cantidad de pregutnas recorridas>> "+conteoPregunta);
         
         conjuntos = tempTree.recorridoPorNiveles();
 
@@ -103,7 +108,7 @@ public class VPreguntasController implements Initializable {
                     System.out.println(respuesta);
                     System.out.println(lConjuntoAnimales.toString());
                     System.out.println(lConjuntoAnimales.isEmpty());
-                ventanaMostrarRespuesta(respuesta, lConjuntoAnimales);
+                ventanaMostrarRespuesta(respuesta, lConjuntoAnimales,modoJuego,botonesSelects);
         }
         
         if (tempTree != null) {
@@ -120,11 +125,12 @@ public class VPreguntasController implements Initializable {
                     stack.push(tempTree.getNoBranch());
                     procesarNodo();
                 });
+                System.out.println(botonesSelects.toString());
             }else {
                 respuesta = tempTree.getContent();
                // txPregunta.setText("Tu animal es: " + tempTree.getContent());
                 try {
-                    ventanaMostrarRespuesta(respuesta,conjuntos);
+                    ventanaMostrarRespuesta(respuesta,conjuntos,modoJuego, botonesSelects);
                 } catch (Exception e) {
                     
                 }
@@ -137,44 +143,57 @@ public class VPreguntasController implements Initializable {
         if (stack.isEmpty()) {
             return;
         }
+        System.out.println("Juego Infinito");
         TreeG4<String> tempTree = stack.pop();
         ArrayList<String> conjuntos = new ArrayList<>();
+                    
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
                 txPregunta.setText(tempTree.getContent());
                 btnSi.setOnAction(event -> {
                     respuestaSi(event);
                     stack.push(tempTree.getYesBranch());
-                    procesarNodo();
+                    procesarNodoInfinito();
                 });
                 btnNo.setOnAction(event -> {
                     respuestaNo(event);
                     stack.push(tempTree.getNoBranch());
-                    procesarNodo();
+                    procesarNodoInfinito();
                 });
+                System.out.println(botonesSelects.toString());
             }else {
                 respuesta = tempTree.getContent();
                // txPregunta.setText("Tu animal es: " + tempTree.getContent());
                 try {
-                    ventanaMostrarRespuesta(respuesta,conjuntos);
-                } catch (Exception e) {                   
+                    ArrayList <String> lConjuntoAnimales = new ArrayList <>();
+                for(String s: conjuntos){
+                    if(!preguntas.contains(s)) {
+                        lConjuntoAnimales.add(s);
+                    }
+                }
+                    if(lConjuntoAnimales.contains(respuesta)) ventanaMostrarRespuesta(respuesta,lConjuntoAnimales, modoJuego, botonesSelects);
+                    else {ventanaMostrarRespuesta(null,lConjuntoAnimales, modoJuego, botonesSelects);}
+                } catch (Exception e) {
                 }
             }
         }
+        
     }
 
     private void respuestaSi(Event event) {
         botonSiPresionado = true;
         conteoPregunta+=1;
+        botonesSelects.add(" sí");
     }
 
     private void respuestaNo(Event event) {
         botonNoPresionado = true;
         conteoPregunta+=1;
+        botonesSelects.add(" no");
     }
     
     
-    public void ventanaMostrarRespuesta (String animal, ArrayList<String> respuestasDadas) {
+    public void ventanaMostrarRespuesta (String animal, ArrayList<String> respuestasDadas, int modo, ArrayList<String> botonesSelects) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vResultado.fxml"));
         
@@ -185,7 +204,7 @@ public class VPreguntasController implements Initializable {
         }
 
         VResultadoController vRespuesta = loader.getController();
-        vRespuesta.home(animal, respuestasDadas);
+        vRespuesta.home(animal, respuestasDadas, modo,botonesSelects);
         
         stage = (Stage) txPregunta.getScene().getWindow();
         scene = new Scene(root, 800, 600);

@@ -8,3 +8,4 @@ Gato sí sí sí no no no no sí no no
 Pingüino no no no sí sí no no no no no
 Elefante sí no sí no no no no no sí no
 Serpiente no sí no no no no sí no no no
+Ornitorrinco sí no no sí sí no no no no no

@@ -7,6 +7,7 @@ package ec.edu.espol.ventanas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -15,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,12 +36,15 @@ public class VResultadoController implements Initializable {
     private ImageView imgResultado;
     @FXML
     private Text txtRespuesta;
-    
+    private int modo;
     private Parent root;
     private Stage stage;
     private Scene scene;
     @FXML
     private Button btnRegresar;
+    @FXML
+    private boolean seleccionar;
+    private ArrayList<String> btnsSelects; 
     /**
      * Initializes the controller class.
      */
@@ -47,33 +53,21 @@ public class VResultadoController implements Initializable {
         // TODO
     }
     
-    public void home(String animal, ArrayList<String> conjuntos){
+    public void home(String animal, ArrayList<String> conjuntos, int modoJuego, ArrayList<String> botonesSelects){
         
-        if(animal == null && conjuntos.isEmpty()){
-            txtRespuesta.setText("Animal no encontrado!");
-            String imagePath = "/imagenes/" + "desconocido" + ".png"; // Ruta a la imagen en el classpath
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            imgResultado.setImage(image);
-        }else if(animal == null && conjuntos.size() == 1){
-            txtRespuesta.setText(conjuntos.get(0));
-            String imagePath = "/imagenes/" + conjuntos.get(0) + ".png"; // Ruta a la imagen en el classpath
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            imgResultado.setImage(image);
-        }else if(conjuntos.size()!=1){
-            txtRespuesta.setText(conjuntos.toString());
-           String imagePath = "/imagenes/" + "varios" + ".png"; // Ruta a la imagen en el classpath
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            imgResultado.setImage(image);
-        }else{
-            txtRespuesta.setText(animal);
-            String imagePath = "/imagenes/" + animal + ".png"; // Ruta a la imagen en el classpath
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-            imgResultado.setImage(image);
-        }
+        btnsSelects = botonesSelects;
+        modo = modoJuego;
         
-          btnRegresar.setOnAction(event -> {
+        seleccionar = mostrarRespueta(animal, conjuntos);
+        
+         btnRegresar.setOnAction(event -> {
             try {
-                regresar(event);
+                if(seleccionar == true){
+                Boolean valor = alertar("AVISO","Tu animal no ha sido encontrado", "Desea agregar su animal al Txt?");
+                if(valor == true) reescribirArchivo(event, btnsSelects);
+                else regresar(event);
+                }
+                else regresar(event);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -91,5 +85,84 @@ public class VResultadoController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+        
+     public boolean mostrarRespueta(String animal, ArrayList<String> conjuntos){
+         
+        if(animal == null && conjuntos.isEmpty()){
+            txtRespuesta.setText("Animal no encontrado!");
+            mostrarImagen("desconocido");
+
+            if(modo == 0){ 
+                return true;
+            }
+        }else if(animal == null && conjuntos.size() == 1){
+            txtRespuesta.setText(conjuntos.get(0));
+            mostrarImagen(conjuntos.get(0));
+        }else if(conjuntos.size()!=1){
+            txtRespuesta.setText(conjuntos.toString());
+            mostrarImagen("varios");
+        }else{
+            txtRespuesta.setText(animal);
+            mostrarImagen(animal);
+        }
+        return false;
+     }
+     
+     public void mostrarImagen(String respuesta) {
+        try{    
+            String imagePath = "/imagenes/" + respuesta + ".png"; // Ruta a la imagen en el classpath
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imgResultado.setImage(image);
+        }catch(NullPointerException  nl){
+            String imagePath = "/imagenes/" + "desconocido" + ".png"; // Ruta a la imagen en el classpath
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imgResultado.setImage(image);
+        }
+     }
+     
+         private void muestraAlerta(String titulo, String mssg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mssg);
+        alert.showAndWait();
+    }
+         
+     private boolean alertar(String tittle, String Header, String cuerpo) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(tittle);
+        alert.setHeaderText(Header);
+        alert.setContentText(cuerpo);
+
+        ButtonType btnContinue = new ButtonType("Continuar");
+        ButtonType btnCancel = new ButtonType("Cancelar");
+        alert.getButtonTypes().setAll(btnContinue, btnCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == btnContinue) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+     
+     public void reescribirArchivo(Event event, ArrayList<String> respuestasDadas){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAgregarAnimal.fxml"));
+        
+        try {
+            root = loader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        VAgregarAnimalController vAgregarAnimal = loader.getController();
+        vAgregarAnimal.home(respuestasDadas);
+        
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
     }
 }
