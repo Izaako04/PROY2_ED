@@ -33,7 +33,8 @@ public class VMenuController implements Initializable {
     private Button btnStart;
     @FXML
     private Button btnConfiguracion;
-
+    private boolean archivosSubidos = false;
+    
     /**
      * Initializes the controller class.
      */
@@ -57,7 +58,25 @@ public class VMenuController implements Initializable {
         });
     }    
 
-    public void home () {}
+    public void home (boolean subioArchivos) {
+        archivosSubidos = subioArchivos;
+        
+        btnStart.setOnMouseClicked(event -> {
+            try {
+                iniciarJuegoM(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        btnConfiguracion.setOnMouseClicked(event -> {
+            try {
+                vCargarArchivo(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
     
     @FXML
     private void iniciarJuegoM(MouseEvent event) throws IOException{
@@ -65,7 +84,7 @@ public class VMenuController implements Initializable {
         root = loader.load();
             
         VCantidadPreguntasController vCPC = loader.getController();
-        vCPC.home();
+        vCPC.home(archivosSubidos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -74,7 +93,7 @@ public class VMenuController implements Initializable {
         stage.show();
     }
     
-        private void vCargarArchivo (Event event) throws IOException {
+    private void vCargarArchivo (Event event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vSubirArchivo.fxml"));
         root = loader.load();
 

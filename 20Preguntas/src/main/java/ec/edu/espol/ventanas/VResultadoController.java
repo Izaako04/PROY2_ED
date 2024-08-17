@@ -45,6 +45,8 @@ public class VResultadoController implements Initializable {
     @FXML
     private boolean seleccionar;
     private ArrayList<String> btnsSelects; 
+    private boolean archivosSubidos;
+    
     /**
      * Initializes the controller class.
      */
@@ -53,8 +55,8 @@ public class VResultadoController implements Initializable {
         // TODO
     }
     
-    public void home(String animal, ArrayList<String> conjuntos, int modoJuego, ArrayList<String> botonesSelects){
-        
+    public void home(String animal, ArrayList<String> conjuntos, int modoJuego, ArrayList<String> botonesSelects, boolean subioArchivos){
+        archivosSubidos = subioArchivos;
         btnsSelects = botonesSelects;
         modo = modoJuego;
         
@@ -62,9 +64,9 @@ public class VResultadoController implements Initializable {
         
          btnRegresar.setOnAction(event -> {
             try {
-                if(seleccionar == true){
-                Boolean valor = alertar("AVISO","Tu animal no ha sido encontrado", "Desea agregar su animal al Txt?");
-                if(valor == true) reescribirArchivo(event, btnsSelects);
+                if(seleccionar){
+                Boolean valor = alertar("AVISO","Tu animal no ha sido encontrado", "¿Desea agregar su animal al Txt?");
+                if(valor) reescribirArchivo(event, btnsSelects);
                 else regresar(event);
                 }
                 else regresar(event);
@@ -74,11 +76,11 @@ public class VResultadoController implements Initializable {
                 });   
     }
 
-        private void regresar (Event event) throws IOException{
+    private void regresar (Event event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
         root = loader.load();
         VMenuController vMenuController = loader.getController();
-        vMenuController.home();
+        vMenuController.home(archivosSubidos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -157,7 +159,7 @@ public class VResultadoController implements Initializable {
         }
 
         VAgregarAnimalController vAgregarAnimal = loader.getController();
-        vAgregarAnimal.home(respuestasDadas);
+        vAgregarAnimal.home(respuestasDadas, archivosSubidos);
         
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);

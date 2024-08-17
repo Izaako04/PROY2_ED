@@ -34,7 +34,6 @@ import javafx.scene.text.Text;
 
 public class VSubirArchivoController implements Initializable {
     private Label lblArchivoSeleccionadoP;
-    
     private File archivoSeleccionado;
     @FXML
     private Button btnIniciarsin;
@@ -108,7 +107,7 @@ public class VSubirArchivoController implements Initializable {
         
 
         VPreguntasController vPreguntas = loader.getController();
-        vPreguntas.home(cantPreguntas, arbol, jueguito.getPreguntasTxt());
+        vPreguntas.home(cantPreguntas, arbol, jueguito.getPreguntasTxt(), archivoPreguntasSubido && archivoRespuestasSubido);
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -184,7 +183,7 @@ public class VSubirArchivoController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
         root = loader.load();
         VMenuController vMenuController = loader.getController();
-        vMenuController.home();
+        vMenuController.home(archivoPreguntasSubido && archivoRespuestasSubido);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);

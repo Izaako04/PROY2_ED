@@ -42,12 +42,14 @@ public class VCantidadPreguntasController implements Initializable {
     private Stage stage;
     private Scene scene;
     private int nPreguntas = 0;
+    private boolean archivosSubidos = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
     
-    public void home () {
+    public void home (boolean subioArchivos) {
+        archivosSubidos = subioArchivos;
         TextFormatter<Integer> textFormatterNPreguntas = new TextFormatter<Integer> (
             new IntegerStringConverter(),
             null,
@@ -95,31 +97,30 @@ public class VCantidadPreguntasController implements Initializable {
         alert.showAndWait();
     }
     
-public void vEmpezarJuego (Event event) throws IOException {
-            muestraAlerta ("Empezando el juego", "Se usará la información del juego en los archivos de texto cargados");
+    public void vEmpezarJuego (Event event) throws IOException {
+        muestraAlerta ("Empezando el juego", "Se usará la información del juego en los archivos de texto cargados");
         
-        TreeG4 <String> arbol = generarArbol (true);
-//        questionsTxt = arbol.getContent();
+        TreeG4 <String> arbol = generarArbol (archivosSubidos);
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPreguntas.fxml"));
         root = loader.load();
         
 
         VPreguntasController vPreguntas = loader.getController();
-        vPreguntas.home(nPreguntas, arbol, jueguito.getPreguntasTxt());
+        vPreguntas.home(nPreguntas, arbol, jueguito.getPreguntasTxt(), archivosSubidos);
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
         stage.setResizable(false);
         stage.setScene(scene);
-        stage.show(); 
+        stage.show();
     }
     
     private void regresar (Event event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
         root = loader.load();
         VMenuController vMenuController = loader.getController();
-        vMenuController.home();
+        vMenuController.home(archivosSubidos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -128,7 +129,7 @@ public void vEmpezarJuego (Event event) throws IOException {
         stage.show();
     }
     
-        public TreeG4 <String> generarArbol (boolean subioArchivos) {
+    public TreeG4 <String> generarArbol (boolean subioArchivos) {
         TreeG4 <String> arbol = new TreeG4 <> ();
         jueguito = new Game();
         jueguito.buildDecisionsTree(subioArchivos);

@@ -57,13 +57,14 @@ public class VAgregarAnimalController implements Initializable {
     private TextField txtNombre;
     @FXML
     private ImageView imgPrevisualizer;
+    private boolean archivosSubidos = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
     
-    public void home (ArrayList<String> rDadas) {
-        
+    public void home (ArrayList<String> rDadas, boolean subioArchivos) {
+        archivosSubidos = subioArchivos;
         respuestas = rDadas;
 
         imgPrevisualizer.setOnMouseClicked(event -> {try {
@@ -104,7 +105,7 @@ public class VAgregarAnimalController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
         root = loader.load();
         VMenuController vMenuController = loader.getController();
-        vMenuController.home();
+        vMenuController.home(archivosSubidos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
@@ -113,7 +114,7 @@ public class VAgregarAnimalController implements Initializable {
         stage.show();
     }
     
-        public TreeG4 <String> generarArbol (boolean subioArchivos) {
+    public TreeG4 <String> generarArbol (boolean subioArchivos) {
         TreeG4 <String> arbol = new TreeG4 <> ();
         jueguito = new Game();
         jueguito.buildDecisionsTree(subioArchivos);
@@ -124,10 +125,14 @@ public class VAgregarAnimalController implements Initializable {
     public boolean escribirAnimalTxt(ArrayList<String> respuestas){
         boolean campoVacio = txtNombre.getText().equals("");
         if (campoVacio) { // campos vacíos
-            muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
+            muestraAlerta ("Error al cargar tu animal", "Por favor intenta de nuevo");
             return false;
         }
-        String rutaArchivo = "respuestas.txt";
+        
+        String rutaArchivo = "";
+        
+        if (archivosSubidos) rutaArchivo = "./Txts/respuestas.txt";
+        else rutaArchivo = "respuestas.txt";
         
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo,true))) {
             // Escribir el string a
