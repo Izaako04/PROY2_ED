@@ -117,10 +117,16 @@ public class VPreguntasController implements Initializable {
         
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
+                float prob = calcularProbabilidad (tempTree);
+                String textoPregunta = tempTree.getContent();
+                System.out.println(prob);
                 
-                txPregunta.setText(tempTree.getContent());
+                if (prob != 0) {
+                    textoPregunta += "\n " + (prob * 100) + "% de que sea " + lConjuntoAnimales.get(0);
+                }
+                
+                txPregunta.setText(textoPregunta);
                 procesarPregunta (tempTree, false);
-                
             } else {
                 procesarHoja (tempTree);
             }
@@ -137,8 +143,15 @@ public class VPreguntasController implements Initializable {
                     
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
+                float prob = calcularProbabilidad (tempTree);
+                String textoPregunta = tempTree.getContent();
+                System.out.println(prob);
                 
-                txPregunta.setText(tempTree.getContent());
+                if (prob != 0) {
+                    textoPregunta += "\n " + (prob * 100) + "% de que sea " + lConjuntoAnimales.get(0);
+                }
+                
+                txPregunta.setText(textoPregunta);
                 procesarPregunta (tempTree, false);
                 
             } else {
@@ -147,6 +160,19 @@ public class VPreguntasController implements Initializable {
         }
         
     }
+    
+    private float calcularProbabilidad (TreeG4 <String> tempTree) {
+        cargarLConjuntoAnimales(tempTree);
+        
+        float porcentaje = 0;
+        
+        if (!lConjuntoAnimales.isEmpty()) {
+            String animal = lConjuntoAnimales.get(0);
+            porcentaje = (float) 1 / lConjuntoAnimales.size();
+        }
+
+        return porcentaje;
+    } 
     
     private void procesarHoja (TreeG4 <String> tempTree) {
         respuesta = tempTree.getContent();
@@ -173,6 +199,18 @@ public class VPreguntasController implements Initializable {
                 lConjuntoAnimales.add(s);
             }
         }
+    }
+    
+    private ArrayList <String> cargarTodosAnimales () {
+        ArrayList <String> returnList = new ArrayList <>();
+        ArrayList <String> todoArbol = treeGame.recorridoPorNiveles();
+                    
+        for(String s: todoArbol){
+            if(!preguntas.contains(s)) {
+                returnList.add(s);
+            }
+        }
+        return returnList;
     }
     
     private void procesarPregunta (TreeG4 <String> tempTree, boolean esHoja) {

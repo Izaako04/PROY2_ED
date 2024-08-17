@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -28,8 +29,9 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author davsu
+ * @author Grupo 4
  */
+
 public class VResultadoController implements Initializable {
 
     @FXML
@@ -42,7 +44,6 @@ public class VResultadoController implements Initializable {
     private Scene scene;
     @FXML
     private Button btnRegresar;
-    @FXML
     private boolean seleccionar;
     private ArrayList<String> btnsSelects; 
     private boolean archivosSubidos;
@@ -62,7 +63,7 @@ public class VResultadoController implements Initializable {
         
         seleccionar = mostrarRespueta(animal, conjuntos);
         
-         btnRegresar.setOnAction(event -> {
+        btnRegresar.setOnAction(event -> {
             try {
                 if(seleccionar){
                 Boolean valor = alertar("AVISO","Tu animal no ha sido encontrado", "¿Desea agregar su animal al Txt?");
@@ -88,9 +89,8 @@ public class VResultadoController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
-        
-     public boolean mostrarRespueta(String animal, ArrayList<String> conjuntos){
-         
+    
+    public boolean mostrarRespueta(String animal, ArrayList<String> conjuntos){
         if(animal == null && conjuntos.isEmpty()){
             txtRespuesta.setText("Animal no encontrado!");
             mostrarImagen("desconocido");
@@ -102,7 +102,12 @@ public class VResultadoController implements Initializable {
             txtRespuesta.setText(conjuntos.get(0));
             mostrarImagen(conjuntos.get(0));
         }else if(conjuntos.size()!=1){
-            txtRespuesta.setText(conjuntos.toString());
+            String texto = "  ";
+            for (String a : conjuntos) {
+                texto += a + "\n";
+            }
+            
+            txtRespuesta.setText(texto);
             mostrarImagen("varios");
         }else{
             txtRespuesta.setText(animal);
