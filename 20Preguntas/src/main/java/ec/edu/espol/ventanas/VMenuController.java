@@ -31,6 +31,8 @@ public class VMenuController implements Initializable {
     @FXML
     private Button btnConfiguracion;
     private boolean archivosSubidos = false;
+    @FXML
+    private Button btnRegresar;
     
     /**
      * Initializes the controller class.
@@ -38,6 +40,14 @@ public class VMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        btnRegresar.setOnMouseClicked(event -> {
+            try {
+                regresarBienvenida(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
         btnStart.setOnMouseClicked(event -> {
             try {
                 iniciarJuegoM(event);
@@ -57,6 +67,14 @@ public class VMenuController implements Initializable {
 
     public void home (boolean subioArchivos) {
         archivosSubidos = subioArchivos;
+        
+        btnRegresar.setOnMouseClicked(event -> {
+            try {
+                regresarBienvenida(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         
         btnStart.setOnMouseClicked(event -> {
             try {
@@ -82,6 +100,20 @@ public class VMenuController implements Initializable {
             
         VCantidadPreguntasController vCPC = loader.getController();
         vCPC.home(archivosSubidos);
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+    
+    private void regresarBienvenida(MouseEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vBienvenida.fxml"));
+        root = loader.load();
+            
+        VBienvenidaController vbc = loader.getController();
+        vbc.home(archivosSubidos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);

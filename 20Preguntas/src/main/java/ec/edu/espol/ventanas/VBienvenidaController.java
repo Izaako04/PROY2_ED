@@ -34,6 +34,7 @@ public class VBienvenidaController implements Initializable {
     private int cont = 0;
     @FXML
     private Label txtContador;
+    private boolean archivosSubidos;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,11 +61,37 @@ public class VBienvenidaController implements Initializable {
         });
     }    
     
+    public void home (boolean subidosArchivos) {
+        archivosSubidos = subidosArchivos;
+        
+        btnIniciar.setOnMouseClicked(event -> {
+            try {
+                iniciarJuegoM(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        tortugaImg.setOnMouseClicked(event -> {
+            cont++;
+            txtContador.setText ("" + cont);
+            
+            if (cont == 4) {
+                muestraAlerta ("Modo de juego rápido desbloqueado", "Ahora las preguntas serán más directas");
+                try {
+                    abrirJuegoRapido (event);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+    
     private void abrirJuegoRapido (Event event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPreguntas.fxml"));
         root = loader.load();            
         VPreguntasController preguntas = loader.getController();
-        preguntas.modoJuegoRapido(true);
+        preguntas.modoJuegoRapido(true, archivosSubidos);
         
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);

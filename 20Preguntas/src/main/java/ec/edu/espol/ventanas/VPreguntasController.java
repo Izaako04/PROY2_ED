@@ -1,10 +1,8 @@
 package ec.edu.espol.ventanas; 
-//hola :D Holaaaaaaa, sale video llamada en whatsapp
-// okas
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
-
 import GameLogic.Question;
 import GameLogic.TreeBuilder;
 import TDAs.TreeG4;
@@ -176,8 +174,9 @@ public class VPreguntasController implements Initializable {
         builder.reset();
     }
 
-    public void modoJuegoRapido(boolean primeraVez) {
+    public void modoJuegoRapido(boolean primeraVez, boolean subidoArchivos) {
         if (primeraVez) {
+            archivosSubidos = subidoArchivos;
             prepararJuegoRapido();
         }
 
@@ -198,13 +197,13 @@ public class VPreguntasController implements Initializable {
             btnSi.setOnAction(event -> {
                 respuestaSi(event);
                 procesarPreguntaJuegoRapido(1, pregunta);
-                modoJuegoRapido(false);
+                modoJuegoRapido(false, true);
             });
 
             btnNo.setOnAction(event -> {
                 respuestaNo(event);
                 procesarPreguntaJuegoRapido(0, pregunta);
-                modoJuegoRapido(false);
+                modoJuegoRapido(false, true);
             });
         } else {
             if (animales.size() == 1) {

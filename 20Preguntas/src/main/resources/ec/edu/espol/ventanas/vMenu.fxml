@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VMenuController">
    <children>
@@ -21,7 +22,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnConfiguracion" layoutX="316.0" layoutY="418.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Configuración" textFill="#c7f9cc">
+      <Button fx:id="btnConfiguracion" layoutX="321.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Configuración" textFill="#c7f9cc">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Text layoutX="495.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aqui para subir tus propios archivos " />
+      <Text layoutX="512.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="de preguntas y respuestas" />
+      <Button fx:id="btnRegresar" layoutX="316.0" layoutY="522.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Regresar" textFill="#c7f9cc">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
