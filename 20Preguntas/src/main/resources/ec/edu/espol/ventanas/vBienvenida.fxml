@@ -35,7 +35,7 @@
             <Font name="System Italic" size="10.0" />
          </font>
       </Label>
-      <Label layoutX="509.0" layoutY="576.0" prefHeight="21.0" prefWidth="288.0" text="tip: ¿qué somos en el grupo? Pulsa la tortuga ese número de veces." textFill="#22577a">
+      <Label layoutX="509.0" layoutY="576.0" prefHeight="21.0" prefWidth="288.0" text="tip: ¿qué grupo somos? Pulsa la tortuga ese número de veces." textFill="#22577a">
          <font>
             <Font name="System Italic" size="10.0" />
          </font>

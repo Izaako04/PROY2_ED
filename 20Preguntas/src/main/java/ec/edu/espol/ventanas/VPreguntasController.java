@@ -150,6 +150,12 @@ public class VPreguntasController implements Initializable {
                 }
                 
                 txPregunta.setText(textoPregunta);
+                ArrayList <String> s = (tempTree.recorridoPorNiveles());
+                
+                for (String ss : s) {
+                    System.out.println(ss);
+                }
+                
                 procesarPregunta (tempTree, false);
                 
             } else {

@@ -1,6 +1,7 @@
 package ec.edu.espol.ventanas;
 
 import GameLogic.Game;
+import GameLogic.TreeBuilder;
 import TDAs.TreeG4;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +54,8 @@ public class VAgregarAnimalController implements Initializable {
     @FXML
     private ImageView imgPrevisualizer;
     private boolean archivosSubidos = false;
+    private TreeG4 <String> tree;
+    private ArrayList <String> preguntasEnOrdenReal;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -59,8 +63,10 @@ public class VAgregarAnimalController implements Initializable {
     
     public void home (ArrayList<String> rDadas, boolean subioArchivos) {
         archivosSubidos = subioArchivos;
+        tree = generarArbol(subioArchivos);
         respuestas = rDadas;
-
+        limpiarRespuestas ();
+        
         imgPrevisualizer.setOnMouseClicked(event -> {try {
             escogerImg(event);
             } catch (IOException ex) {
@@ -85,6 +91,39 @@ public class VAgregarAnimalController implements Initializable {
         });
     }
     
+    private void limpiarRespuestas() {
+        ArrayList<String> r = new ArrayList<>(respuestas.subList(1, respuestas.size()));
+        ArrayList<String> preguntas = new ArrayList<>();
+        Stack<TreeG4<String>> s = new Stack<>();
+        s.push(tree);
+        int i = 0;
+
+        while (!s.isEmpty() && i < r.size()) {
+            TreeG4<String> tempTree = s.pop();
+            preguntas.add(tempTree.getContent());
+
+            if (r.get(i).equals("sí")) {
+                tempTree = tempTree.getYesBranch();
+            } else {
+                tempTree = tempTree.getNoBranch();
+            }
+
+            s.push(tempTree);
+            i++;
+        }
+
+        ArrayList<String> respuestasOrdenadas = new ArrayList<>();
+        respuestasOrdenadas.add(" ");
+
+        for (String pregunta : preguntasEnOrdenReal) {
+            int index = preguntas.indexOf(pregunta);
+            if (index != -1) {
+                respuestasOrdenadas.add(respuestas.get(index + 1));
+            }
+        }
+
+        respuestas = respuestasOrdenadas;
+    }
     
     private void muestraAlerta (String titulo, String mssg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -93,7 +132,6 @@ public class VAgregarAnimalController implements Initializable {
         alert.setContentText(mssg);
         alert.showAndWait();
     }
-    
     
     private void regresar (Event event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
@@ -113,6 +151,12 @@ public class VAgregarAnimalController implements Initializable {
         jueguito = new Game();
         jueguito.buildDecisionsTree(subioArchivos);
         arbol = jueguito.getTree();
+        
+        TreeBuilder builder = new TreeBuilder(archivosSubidos);
+        builder.setAnimals();
+        preguntasEnOrdenReal = builder.setQuestions();
+        builder.reset();
+        
         return arbol;
     }
 
