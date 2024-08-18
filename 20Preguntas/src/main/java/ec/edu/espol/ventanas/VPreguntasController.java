@@ -5,23 +5,24 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
-import GameLogic.Game;
-import TDAs.Reader;
+import GameLogic.Question;
+import GameLogic.TreeBuilder;
 import TDAs.TreeG4;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -63,7 +64,9 @@ public class VPreguntasController implements Initializable {
     @FXML
     private StackPane StackPane;
     private boolean archivosSubidos;
-
+    private PriorityQueue <Question> pqPreguntas = new PriorityQueue <> (Comparator.comparingDouble(Question::getEntropy));
+    private HashMap <String, ArrayList<Integer>> animales;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
@@ -119,7 +122,6 @@ public class VPreguntasController implements Initializable {
             if (!tempTree.isLeaf()) {
                 float prob = calcularProbabilidad (tempTree);
                 String textoPregunta = tempTree.getContent();
-                System.out.println(prob);
                 
                 if (prob != 0) {
                     textoPregunta += "\n " + (prob * 100) + "% de que sea " + lConjuntoAnimales.get(0);
@@ -132,7 +134,6 @@ public class VPreguntasController implements Initializable {
             }
         }
     }
-    
      
     private void procesarNodoInfinito () {
         if (stack.isEmpty()) {
@@ -145,7 +146,6 @@ public class VPreguntasController implements Initializable {
             if (!tempTree.isLeaf()) {
                 float prob = calcularProbabilidad (tempTree);
                 String textoPregunta = tempTree.getContent();
-                System.out.println(prob);
                 
                 if (prob != 0) {
                     textoPregunta += "\n " + (prob * 100) + "% de que sea " + lConjuntoAnimales.get(0);
@@ -159,6 +159,126 @@ public class VPreguntasController implements Initializable {
             }
         }
         
+    }
+    
+    private void reorganizarAnimales() {
+    }
+
+    
+    private void prepararJuegoRapido() {
+        TreeBuilder builder = new TreeBuilder(archivosSubidos);
+        builder.setAnimals();
+        preguntas = builder.setQuestions();
+        pqPreguntas = builder.getQuestions();
+ 
+        animales = builder.getAnimals();
+        reorganizarAnimales();
+        builder.reset();
+    }
+
+    public void modoJuegoRapido(boolean primeraVez) {
+        if (primeraVez) {
+            prepararJuegoRapido();
+        }
+
+        if (!pqPreguntas.isEmpty()) {
+            if (animales.size() == 1) {
+                // Aquí mostraría el animal si ya no hay más preguntas
+                respuesta = animales.keySet().iterator().next();
+                lConjuntoAnimales = new ArrayList <> ();
+                lConjuntoAnimales.add(respuesta);
+                ventanaMostrarRespuesta(respuesta,lConjuntoAnimales, botonesSelects);
+                return;
+            }
+            
+            String pregunta = pqPreguntas.poll().toString();
+
+            txPregunta.setText(pregunta);
+
+            btnSi.setOnAction(event -> {
+                respuestaSi(event);
+                procesarPreguntaJuegoRapido(1, pregunta);
+                modoJuegoRapido(false);
+            });
+
+            btnNo.setOnAction(event -> {
+                respuestaNo(event);
+                procesarPreguntaJuegoRapido(0, pregunta);
+                modoJuegoRapido(false);
+            });
+        } else {
+            if (animales.size() == 1) {
+                // Aquí mostraría el animal si ya no hay más preguntas
+                respuesta = animales.keySet().iterator().next();
+                lConjuntoAnimales = new ArrayList <> ();
+                lConjuntoAnimales.add(respuesta);
+                ventanaMostrarRespuesta(respuesta,lConjuntoAnimales, botonesSelects);
+                return;
+            }
+            lConjuntoAnimales = new ArrayList <> ();
+            lConjuntoAnimales.add(respuesta);
+            ventanaMostrarRespuesta(null,lConjuntoAnimales, botonesSelects);
+        }
+    }
+
+
+    private void procesarPreguntaJuegoRapido(int respuesta, String pregunta) { 
+        HashMap<String, ArrayList<Integer>> animalesActualizados = new HashMap<>();
+        int index = preguntas.indexOf(pregunta);
+        
+        for (Map.Entry<String, ArrayList<Integer>> entry : animales.entrySet()) {
+            if (entry.getValue().get(index) == respuesta) {
+                animalesActualizados.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        preguntas.remove(index);
+        animales = animalesActualizados;
+                
+        for (Map.Entry<String, ArrayList<Integer>> entry : animales.entrySet()) {
+            entry.getValue().remove(index);
+        }
+        
+        if (animales.size() == 1) {
+            return;
+        }
+        
+        ArrayList<Integer> indicesAEliminar = new ArrayList<>();
+        int sizePreguntas = pqPreguntas.size();
+        
+        for (int i = 0; i < sizePreguntas; i++) {
+            int cont = 0;
+            for (ArrayList<Integer> respuestas : animales.values()) {
+                if (respuestas.get(i) == 0) {
+                    cont++;
+                }
+            }
+
+            if (cont == 0 || cont == animales.size()) {
+                indicesAEliminar.add(i);
+            }
+        }
+
+        Collections.sort(indicesAEliminar, Collections.reverseOrder());
+        
+        for (int indexToRemove : indicesAEliminar) {
+            preguntas.remove(indexToRemove);
+            for (ArrayList<Integer> respuestas : animales.values()) {
+                respuestas.remove(indexToRemove);
+            }
+        }
+        
+        PriorityQueue <Question> tempPQ = new PriorityQueue <> (Comparator.comparingDouble(Question::getEntropy));
+        while (!pqPreguntas.isEmpty()) {
+            Question q = pqPreguntas.poll();
+            if (preguntas.contains(q.getStatement())) {
+                tempPQ.offer(q);
+            }
+        }
+        
+        while (!tempPQ.isEmpty()) {
+            pqPreguntas.offer(tempPQ.poll());
+        }
     }
     
     private float calcularProbabilidad (TreeG4 <String> tempTree) {

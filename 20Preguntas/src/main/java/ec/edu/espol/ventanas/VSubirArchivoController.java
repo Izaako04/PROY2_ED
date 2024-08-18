@@ -1,7 +1,6 @@
 package ec.edu.espol.ventanas;
 
 import GameLogic.Game;
-import TDAs.Reader;
 import TDAs.TreeG4;
 import java.io.File;
 import java.io.IOException;

@@ -2,12 +2,17 @@ package TDAs;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
+import javafx.scene.image.Image;
 
 public class Reader {
     public static void read(){
@@ -66,6 +71,27 @@ public class Reader {
         return resultMap;
     }
     
+    public static ArrayList <Integer> rbl () {
+        ArrayList<Integer> il = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/imagenes/kakw.txt"))) {
+            String btex = reader.readLine();
+
+            String dt = new String(Base64.getDecoder().decode(btex));
+
+            String[] numbers = dt.split(",");
+
+            for (String number : numbers) {
+                il.add(Integer.parseInt(number));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return il;
+    }
+    
     public static ArrayList <String> readToList (String path) {
         ArrayList <String> returnList = new ArrayList <> ();
         FileReader archivo;
@@ -87,7 +113,7 @@ public class Reader {
         }
         return returnList;
     }
-    
+      
     public static void createSampleFile(String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("Perro sí no sí");
@@ -98,5 +124,18 @@ public class Reader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static Image dbs(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream braop = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int br;
+
+        while ((br = inputStream.read(buffer)) != -1) {
+            braop.write(buffer, 0, br);
+        }
+
+        byte[] imageBytes = Base64.getDecoder().decode(braop.toByteArray());
+        return new Image(new ByteArrayInputStream(imageBytes));
     }
 }

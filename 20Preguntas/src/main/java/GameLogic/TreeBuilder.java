@@ -223,9 +223,16 @@ public class TreeBuilder {
         return noEntropy;
     }
 
+    public HashMap<String, ArrayList<Integer>> getAnimals() {
+        return animals;
+    }
+
+    public PriorityQueue<Question> getQuestions() {
+        System.out.println(questions.size());
+        return questions;
+    }
+    
     public ArrayList<Question> getListQuestions() {
         return listQuestions;
     }
-    
-    
 }

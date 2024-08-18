@@ -1,13 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package ec.edu.espol.ventanas;
 
 import GameLogic.Game;
+import TDAs.Reader;
 import TDAs.TreeG4;
+import java.io.FileInputStream;
 import java.io.IOException;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import java.io.InputStream;
 import java.net.URL;
+import javafx.util.Duration;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -20,6 +22,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -86,9 +90,15 @@ public class VCantidadPreguntasController implements Initializable {
         }
         
         nPreguntas = Integer.parseInt(tfNumero.getText());
+        
+        if (Reader.rbl().contains(nPreguntas)) {
+            emergencia ();
+            return;
+        }
+        
         vEmpezarJuego (event);
     }
-    
+     
     private void muestraAlerta (String titulo, String mssg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(titulo);
@@ -127,6 +137,26 @@ public class VCantidadPreguntasController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+    
+    private void emergencia () {
+        String archivoRuta = "src/main/resources/imagenes/e.txt";
+        try {
+            InputStream bs = new FileInputStream(archivoRuta);
+            Image image = Reader.dbs(bs);
+            ImageView imageView = new ImageView(image);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.getDialogPane().setContent(imageView);
+            alert.show();
+            Timeline timeline = new Timeline(
+            new KeyFrame(Duration.millis(60), event -> alert.close())
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public TreeG4 <String> generarArbol (boolean subioArchivos) {
