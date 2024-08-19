@@ -159,9 +159,9 @@ public class VPreguntasController implements Initializable {
                 txPregunta.setText(textoPregunta);
                 ArrayList <String> s = (tempTree.recorridoPorNiveles());
                 
-                for (String ss : s) {
-                    System.out.println(ss);
-                }
+//                for (String ss : s) {
+//                    System.out.println(ss);
+//                }
                 
                 procesarPregunta (tempTree, false);
                 
@@ -229,7 +229,7 @@ public class VPreguntasController implements Initializable {
             }
             lConjuntoAnimales = new ArrayList <> ();
             lConjuntoAnimales.add(respuesta);
-            ventanaMostrarRespuesta(null,lConjuntoAnimales, botonesSelects);
+            ventanaMostrarRespuesta(respuesta,lConjuntoAnimales, botonesSelects);
         }
     }
 

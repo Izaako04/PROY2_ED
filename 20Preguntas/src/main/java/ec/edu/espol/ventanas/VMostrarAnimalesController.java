@@ -80,7 +80,7 @@ public class VMostrarAnimalesController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vMenu.fxml"));
         root = loader.load();
         VMenuController vMenuController = loader.getController();
-        vMenuController.home(false);
+        vMenuController.home(subioArchivo);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);

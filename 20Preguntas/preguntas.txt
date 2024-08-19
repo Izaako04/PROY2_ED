@@ -1,20 +1,10 @@
 ¿Es este animal un mamífero?
 ¿Es este animal un carnívoro?
 ¿Se para este animal sobre cuatro patas?
-¿Este animal puede volar?
-¿Este animal vive en el agua?
-¿Este animal tiene escamas?
-¿Este animal es doméstico?
-¿Este animal es herbívoro?
-¿Este animal es nocturno?
-¿Este animal tiene garras?
-¿Este animal es ovíparo?
-¿Este animal tiene un cuello largo?
-¿Este animal puede nadar?
-¿Este animal es venenoso?
-¿Este animal tiene plumas?
-¿Este animal tiene una trompa?
-¿Este animal es un reptil?
-¿Este animal vive en la selva?
-¿Este animal es un insecto?
-¿Este animal tiene colmillos?
+¿Vive este animal en el agua?
+¿Es este animal un ave?
+¿Puede este animal volar?
+¿Es este animal un reptil?
+¿Es este animal doméstico?
+¿Es este animal más grande que un perro?
+¿Tiene este animal un caparazón?
