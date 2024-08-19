@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: DEE2E6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.ventanas.VMenuController">
    <children>
       <Label layoutX="278.0" layoutY="57.0" text="Menú de Juego" textFill="#22577a">
          <font>
@@ -22,7 +22,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btnConfiguracion" layoutX="321.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Configuración" textFill="#c7f9cc">
+      <Button fx:id="btnConfiguracion" layoutX="316.0" layoutY="406.0" mnemonicParsing="false" onMouseClicked="#iniciarJuegoM" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Configuración" textFill="#c7f9cc">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -36,6 +36,11 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnVerAnimales" layoutX="316.0" layoutY="343.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="168.0" styleClass="btn" stylesheets="@estilos.css" text="Ver Animales" textFill="#c7f9cc">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

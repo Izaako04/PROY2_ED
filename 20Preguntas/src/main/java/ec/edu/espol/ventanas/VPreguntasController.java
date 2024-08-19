@@ -17,10 +17,13 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -43,6 +46,8 @@ public class VPreguntasController implements Initializable {
     private Button btnSi;
     @FXML
     private Button btnNo;
+    @FXML
+    private Button btnDes;
     
     private Parent root;
     private Stage stage;
@@ -58,18 +63,21 @@ public class VPreguntasController implements Initializable {
     private ArrayList<String> conjuntos;
     private ArrayList<String> lConjuntoAnimales;
     private Stack<TreeG4<String>> stack;
-    private boolean botonSiPresionado = false, botonNoPresionado = false;
+    private boolean botonSiPresionado = false, botonNoPresionado = false, botonDesPresionado = false;
     @FXML
     private StackPane StackPane;
     private boolean archivosSubidos;
     private PriorityQueue <Question> pqPreguntas = new PriorityQueue <> (Comparator.comparingDouble(Question::getEntropy));
     private HashMap <String, ArrayList<Integer>> animales;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
     public void home (int nPreguntas, TreeG4 <String> tree, ArrayList<String> prets, boolean subioArchivos){
+        
+        muestraAlerta("Inicio de Juego", "Piensa en un animal!");
         archivosSubidos = subioArchivos;
         preguntas = prets;
         treeGame = tree;
@@ -118,7 +126,7 @@ public class VPreguntasController implements Initializable {
         
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
-                float prob = calcularProbabilidad (tempTree);
+                float prob = Math.round(calcularProbabilidad (tempTree) * 100.0f) / 100.0f;
                 String textoPregunta = tempTree.getContent();
                 
                 if (prob != 0) {
@@ -142,11 +150,11 @@ public class VPreguntasController implements Initializable {
                     
         if (tempTree != null) {
             if (!tempTree.isLeaf()) {
-                float prob = calcularProbabilidad (tempTree);
+                float prob = Math.round(calcularProbabilidad (tempTree) * 100.0f) / 100.0f;
                 String textoPregunta = tempTree.getContent();
                 
                 if (prob != 0) {
-                    textoPregunta += "\n " + (prob * 100) + "% de que sea " + lConjuntoAnimales.get(0);
+                    textoPregunta += "\n \n" + (prob * 100) + "% de que sea " + lConjuntoAnimales.get(0);
                 }
                 
                 txPregunta.setText(textoPregunta);
@@ -167,9 +175,10 @@ public class VPreguntasController implements Initializable {
     
     private void reorganizarAnimales() {
     }
-
     
     private void prepararJuegoRapido() {
+        
+        btnDes.setVisible(false);
         TreeBuilder builder = new TreeBuilder(archivosSubidos);
         builder.setAnimals();
         preguntas = builder.setQuestions();
@@ -181,6 +190,9 @@ public class VPreguntasController implements Initializable {
     }
 
     public void modoJuegoRapido(boolean primeraVez, boolean subidoArchivos) {
+        
+        
+        
         if (primeraVez) {
             archivosSubidos = subidoArchivos;
             prepararJuegoRapido();
@@ -350,6 +362,20 @@ public class VPreguntasController implements Initializable {
             stack.push(tempTree.getNoBranch());
             continuar(tempTree, esHoja);
         });
+        
+        btnDes.setOnAction(event -> {
+            if(botonesSelects.size() == 1) try {
+                regresar(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            else{
+                respuestaDes(event);
+                TreeG4 nuevoTempTree = retrocederPregunta();
+                stack.push(nuevoTempTree);
+                continuar(nuevoTempTree, esHoja);
+            }
+        });
     }
     
     private void continuar (TreeG4 <String> tempTree, boolean esHoja) {
@@ -371,6 +397,48 @@ public class VPreguntasController implements Initializable {
         botonNoPresionado = true;
         conteoPregunta+=1;
         botonesSelects.add(" no");
+    }
+    
+    private void respuestaDes(Event event) {
+        conteoPregunta-=1;
+        botonesSelects.removeLast();
+        botonDesPresionado = true;
+    }
+    
+    
+    private void muestraAlerta(String titulo, String mssg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mssg);
+        alert.showAndWait();
+    }
+    
+    public void regresar(Event event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vCantidadPreguntas.fxml"));
+        root = loader.load();
+            
+        VCantidadPreguntasController vCPC = loader.getController();
+        vCPC.home(archivosSubidos);
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+    
+    public TreeG4 <String> retrocederPregunta(){
+        
+        TreeG4 <String> nuevoArbol = treeGame;
+        
+        for(int i = 1; i < botonesSelects.size() -1;i++){
+            if(botonesSelects.get(i).equals(" sí")){
+                nuevoArbol = nuevoArbol.getYesBranch();
+            }else if(botonesSelects.get(i).equals(" no")) nuevoArbol = nuevoArbol.getNoBranch();
+            
+        }
+        return nuevoArbol;
     }
     
     

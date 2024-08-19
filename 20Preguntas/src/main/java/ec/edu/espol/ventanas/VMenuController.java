@@ -33,6 +33,8 @@ public class VMenuController implements Initializable {
     private boolean archivosSubidos = false;
     @FXML
     private Button btnRegresar;
+    @FXML
+    private Button btnVerAnimales;
     
     /**
      * Initializes the controller class.
@@ -63,6 +65,15 @@ public class VMenuController implements Initializable {
                 ex.printStackTrace();
             }
         });
+        
+        btnVerAnimales.setOnMouseClicked(event -> {
+            try {
+                vMostrarAnimales(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
     }    
 
     public void home (boolean subioArchivos) {
@@ -87,6 +98,13 @@ public class VMenuController implements Initializable {
         btnConfiguracion.setOnMouseClicked(event -> {
             try {
                 vCargarArchivo(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        btnVerAnimales.setOnMouseClicked(event -> {
+            try {
+                vMostrarAnimales(event);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -134,6 +152,20 @@ public class VMenuController implements Initializable {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show(); 
+    }
+    
+        private void vMostrarAnimales(MouseEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vMostrarAnimales.fxml"));
+        root = loader.load();
+            
+        VMostrarAnimalesController vbc = loader.getController();
+        vbc.home(archivosSubidos);
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
     
 }
