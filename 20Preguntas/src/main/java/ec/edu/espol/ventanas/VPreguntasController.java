@@ -23,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -173,9 +172,6 @@ public class VPreguntasController implements Initializable {
         
     }
     
-    private void reorganizarAnimales() {
-    }
-    
     private void prepararJuegoRapido() {
         
         btnDes.setVisible(false);
@@ -185,7 +181,6 @@ public class VPreguntasController implements Initializable {
         pqPreguntas = builder.getQuestions();
  
         animales = builder.getAnimals();
-        reorganizarAnimales();
         builder.reset();
     }
 
@@ -401,7 +396,7 @@ public class VPreguntasController implements Initializable {
     
     private void respuestaDes(Event event) {
         conteoPregunta-=1;
-        botonesSelects.removeLast();
+        botonesSelects.remove(botonesSelects.size()-1);
         botonDesPresionado = true;
     }
     
@@ -428,11 +423,10 @@ public class VPreguntasController implements Initializable {
         stage.show();
     }
     
-    public TreeG4 <String> retrocederPregunta(){
-        
+    public TreeG4 <String> retrocederPregunta() {
         TreeG4 <String> nuevoArbol = treeGame;
         
-        for(int i = 1; i < botonesSelects.size() -1;i++){
+        for(int i = 1; i < botonesSelects.size(); i++){
             if(botonesSelects.get(i).equals(" sí")){
                 nuevoArbol = nuevoArbol.getYesBranch();
             }else if(botonesSelects.get(i).equals(" no")) nuevoArbol = nuevoArbol.getNoBranch();
